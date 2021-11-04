@@ -65,10 +65,12 @@ class UKF {
 
   // state covariance matrix
   Eigen::MatrixXd P_;
+  Eigen::MatrixXd P_aug;
 
   // predicted sigma points matrix
   Eigen::MatrixXd Xsig_pred_;
   Eigen::MatrixXd Xsig;
+  Eigen::MatrixXd Xsig_aug;
 
   // time when the state is true, in us
   long long time_us_;
