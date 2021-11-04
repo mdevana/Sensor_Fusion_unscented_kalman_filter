@@ -56,7 +56,8 @@ UKF::UKF() {
    */
    n_x_ = 5;
    n_aug_ = 7;
-   n_z_ = 3;
+   n_z_radar = 3;
+   n_z_lidar = 2;
    lambda_ = 3 - n_aug_;
    
   // create augmented mean vector 
