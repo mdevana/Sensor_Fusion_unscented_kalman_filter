@@ -64,10 +64,10 @@ UKF::UKF() {
   x_aug = VectorXd(n_aug_);
 
   // create augmented state covariance
-  MatrixXd P_aug = MatrixXd(n_aug_, n_aug_);
+  P_aug = MatrixXd(n_aug_, n_aug_);
 
   // create sigma point matrix
-  MatrixXd Xsig_aug = MatrixXd(n_aug_, 2 * n_aug_ + 1);
+  Xsig_aug = MatrixXd(n_aug_, 2 * n_aug_ + 1);
   
   // create and initialise Weight vector
   weights_ = VectorXd(2 * n_aug_ + 1);
@@ -104,8 +104,8 @@ void UKF::GenerateSigmaPoint(){
   
   for(int i=0;i < n_aug_;i++){
       
-      Xsig_aug.col(i+1)           = x_aug + sqrt(lambda+n_aug) * A.col(i);
-      Xsig_aug.col(i + 1 + n_aug) = x_aug - sqrt(lambda+n_aug) * A.col(i);
+      Xsig_aug.col(i+1)           = x_aug + sqrt(lambda_ + n_aug_) * A.col(i);
+      Xsig_aug.col(i + 1 + n_aug) = x_aug - sqrt(lambda_ + n_aug_) * A.col(i);
   }
   
 	
