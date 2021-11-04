@@ -133,16 +133,16 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
     }
 	
 	
-	if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
+	if (meas_pack.sensor_type_ == MeasurementPackage::RADAR) {
     // TODO: Radar updates
 	VectorXd z=VectorXd(3);
-	z<< measurement_pack.raw_measurements_[0],measurement_pack.raw_measurements_[1],measurement_pack.raw_measurements_[2];
+	z<< meas_pack.raw_measurements_[0],meas_pack.raw_measurements_[1],meas_pack.raw_measurements_[2];
 	
 
   } else {
     // TODO: Laser updates
 	VectorXd z=VectorXd(2);
-	z<< measurement_pack.raw_measurements_[0],measurement_pack.raw_measurements_[1];
+	z<< meas_pack.raw_measurements_[0],meas_pack.raw_measurements_[1];
 	
 
   }
