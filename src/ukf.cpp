@@ -213,12 +213,12 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
   
   // calculate innovation covariance matrix S
   
-  MatrixXd R = MatrixXd(n_z,n_z);
+  MatrixXd R = MatrixXd(n_z_radar,n_z_radar);
   R<< std_radr_ * std_radr_,0,0,
       0,std_radphi_ * std_radphi_,0,
       0,0,std_radrd_ * std_radrd_;
   
-  MatrixXd S = MatrixXd(n_z,n_z);
+  MatrixXd S = MatrixXd(n_z_radar,n_z_radar);
   S.fill(0.0);      
   for (int k=0; k < 2 * n_aug_ + 1; ++k){
 
