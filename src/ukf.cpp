@@ -84,7 +84,7 @@ UKF::~UKF() {}
 void UKF::GenerateSigmaPoint(){
   // create augmented mean state
   
-  x_aug.head(n_x_) = x;
+  x_aug.head(n_x_) = x_;
   // add noise Va / Vaa
   x_aug(n_x_) = 0;
   x_aug(n_x_ + 1) = 0;
