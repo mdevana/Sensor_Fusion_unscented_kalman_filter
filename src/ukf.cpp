@@ -104,8 +104,8 @@ void UKF::GenerateSigmaPoint(){
   
   for(int i=0;i < n_aug_;i++){
       
-      Xsig_aug.col(i+1)           = x_aug + sqrt(lambda_ + n_aug_) * A.col(i);
-      Xsig_aug.col(i + 1 + n_aug) = x_aug - sqrt(lambda_ + n_aug_) * A.col(i);
+      Xsig_aug.col(i+1)            = x_aug + sqrt(lambda_ + n_aug_) * A.col(i);
+      Xsig_aug.col(i + 1 + n_aug_) = x_aug - sqrt(lambda_ + n_aug_) * A.col(i);
   }
   
 	
