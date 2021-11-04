@@ -40,6 +40,14 @@ class UKF {
    * @param meas_package The measurement at k+1
    */
   void UpdateRadar(MeasurementPackage meas_package);
+  
+  void UKF::GenerateSigmaPoint();
+
+  void UKF::AugmentSigmaPoint();
+
+  void UKF::PredictSigmaPoint();
+
+void UKF::PredictMeanCovariance();
 
 
   // initially set to false, set to true in first call of ProcessMeasurement
