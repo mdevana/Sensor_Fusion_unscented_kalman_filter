@@ -90,8 +90,8 @@ void UKF::GenerateSigmaPoint(){
   x_aug(n_x_ + 1) = 0;
   
   // create augmented covariance matrix
-  P_aug.topLeftCorner(n_x_, n_x_) = P;
-  P_aug(n_x_, n_x_) =  std_a * std_a;
+  P_aug.topLeftCorner(n_x_, n_x_) = P_;
+  P_aug(n_x_, n_x_) =  std_a_ * std_a_;
   P_aug(n_x_ + 1, n_x_ + 1) = std_yawdd * std_yawdd;
   
   // create square root matrix
