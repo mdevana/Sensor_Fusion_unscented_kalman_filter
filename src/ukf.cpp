@@ -120,18 +120,13 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
     // TODO: Radar updates
 	VectorXd z=VectorXd(3);
 	z<< measurement_pack.raw_measurements_[0],measurement_pack.raw_measurements_[1],measurement_pack.raw_measurements_[2];
-	ekf_.R_ = R_radar_;
-	Hj_ = tools.CalculateJacobian(ekf_.x_);
-	ekf_.H_=Hj_;
-	ekf_.UpdateEKF(z);
+	
 
   } else {
     // TODO: Laser updates
 	VectorXd z=VectorXd(2);
 	z<< measurement_pack.raw_measurements_[0],measurement_pack.raw_measurements_[1];
-	ekf_.R_ = R_laser_;
-	ekf_.H_= H_laser_;
-	ekf_.Update(z);
+	
 
   }
    
