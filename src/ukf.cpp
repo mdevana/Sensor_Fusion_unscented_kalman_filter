@@ -97,12 +97,12 @@ void UKF::PredictMeanCovariance(){
 
 
 
-void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
+void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
   /**
    * TODO: Complete this function! Make sure you switch between lidar and radar
    * measurements.
    */
-   if (meas_package.sensor_type_ == MeasurementPackage::RADAR) {
+   if (meas_pack.sensor_type_ == MeasurementPackage::RADAR) {
       // TODO: Convert radar from polar to cartesian coordinates 
       //         and initialize state.
 	  float rho_mea=meas_package.raw_measurements_[0];
@@ -122,10 +122,10 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 			0; 
 
     }
-    else if (meas_package.sensor_type_ == MeasurementPackage::LASER) {
+    else if (meas_pack.sensor_type_ == MeasurementPackage::LASER) {
       // TODO: Initialize state.
-	  x_ << meas_package.raw_measurements_[0], 
-            meas_package.raw_measurements_[1], 
+	  x_ << meas_pack.raw_measurements_[0], 
+            meas_pack.raw_measurements_[1], 
             0, 
             0,
 			0;
