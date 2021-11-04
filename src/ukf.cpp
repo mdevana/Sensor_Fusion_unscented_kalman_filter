@@ -162,7 +162,7 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
    * covariance, P_.
    * You can also calculate the lidar NIS, if desired.
    */
-   for (int i=0; i<2*n_aug+1; ++i){
+   for (int i=0; i<2 * n_aug_ + 1; ++i){
       
       Zsig(0,i) = Xsig_pred(0,i);
       Zsig(1,i) = Xsig_pred(1,i);
@@ -184,7 +184,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
   double rho,phi,rho_dot;
   double x_px, x_py, x_vel, x_phi, x_phi_dot;
   
-  for (int i=0; i<2*n_aug+1; ++i){
+  for (int i=0; i<2 * n_aug_ + 1; ++i){
       
       x_px = Xsig_pred(0,i);
       x_py = Xsig_pred(1,i);
@@ -206,7 +206,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
   // calculate mean predicted measurement
   VectorXd z_pred = VectorXd(n_z);
   z_pred.fill(0.0);
-  for (int j=0; j< 2 * n_aug + 1; ++j){
+  for (int j=0; j< 2 * n_aug_ + 1; ++j){
       z_pred = z_pred + Zsig.col(j) * weights(j);
       
   }
@@ -220,7 +220,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
   
   MatrixXd S = MatrixXd(n_z,n_z);
   S.fill(0.0);      
-  for (int k=0; k < 2*n_aug + 1; ++k){
+  for (int k=0; k < 2 * n_aug_ + 1; ++k){
 
       
       VectorXd diff = Zsig.col(k) - z_pred;
