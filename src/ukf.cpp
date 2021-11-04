@@ -61,10 +61,10 @@ UKF::UKF() {
    lambda_ = 3 - n_aug_;
    
   // create augmented mean vector 
-  VectorXd x_aug = VectorXd(7);
+  x_aug = VectorXd(n_aug_);
 
   // create augmented state covariance
-  MatrixXd P_aug = MatrixXd(7, 7);
+  MatrixXd P_aug = MatrixXd(n_aug_, n_aug_);
 
   // create sigma point matrix
   MatrixXd Xsig_aug = MatrixXd(n_aug_, 2 * n_aug_ + 1);
@@ -82,7 +82,35 @@ UKF::UKF() {
 UKF::~UKF() {}
 
 void UKF::GenerateSigmaPoint(){
+  // create augmented mean state
+  
+  x_aug.head(n_x_) = x;
+  // add noise Va / Vaa
+  x_aug(n_x_) = 0;
+  x_aug(n_x_ + 1) = 0;
+  
+  // create augmented covariance matrix
+  P_aug.topLeftCorner(n_x_, n_x_) = P;
+  P_aug(n_x_, n_x_) =  std_a * std_a;
+  P_aug(n_x_ + 1, n_x_ + 1) = std_yawdd * std_yawdd;
+  
+  // create square root matrix
+  MatrixXd A = P_aug.llt().matrixL();
+
+  // create augmented sigma points
+  
+  Xsig_aug.col(0) = x_aug;
+  //std::cout << "x_aug = " << std::endl << Xsig_aug << std::endl;
+  
+  for(int i=0;i < n_aug_;i++){
+      
+      Xsig_aug.col(i+1)           = x_aug + sqrt(lambda+n_aug) * A.col(i);
+      Xsig_aug.col(i + 1 + n_aug) = x_aug - sqrt(lambda+n_aug) * A.col(i);
+  }
+  
+	
 }
+
 
 void UKF::AugmentSigmaPoint(){
 }
