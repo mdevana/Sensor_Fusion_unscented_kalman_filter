@@ -345,7 +345,7 @@ void UKF::UKF_Update(){
 
   // create example matrix for predicted state covariance
   P_ = MatrixXd(n_x_,n_x_);
-  P <<
+  P_ <<
     0.0054342,  -0.002405,  0.0034157, -0.0034819, -0.00299378,
     -0.002405,    0.01084,   0.001492,  0.0098018,  0.00791091,
     0.0034157,   0.001492,  0.0058012, 0.00077863, 0.000792973,
@@ -353,7 +353,7 @@ void UKF::UKF_Update(){
    -0.0029937,  0.0079109, 0.00079297,   0.011249,   0.0126972;
 
   // create example matrix with sigma points in measurement space
-  Zsig = MatrixXd(n_z, 2 * n_aug_ + 1);
+  Zsig = MatrixXd(n_z_radar, 2 * n_aug_ + 1);
   Zsig <<
     6.1190,  6.2334,  6.1531,  6.1283,  6.1143,  6.1190,  6.1221,  6.1190,  6.0079,  6.0883,  6.1125,  6.1248,  6.1190,  6.1188,  6.12057,
    0.24428,  0.2337, 0.27316, 0.24616, 0.24846, 0.24428, 0.24530, 0.24428, 0.25700, 0.21692, 0.24433, 0.24193, 0.24428, 0.24515, 0.245239,
@@ -417,14 +417,14 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
    
 
   // create matrix for cross correlation Tc
-  MatrixXd Tc = MatrixXd(n_x, n_z);
+  Tc = MatrixXd(n_x_, n_z_radar);
    
    
   // transform sigma points into measurement space
   double rho,phi,rho_dot;
   double x_px, x_py, x_vel, x_phi, x_phi_dot;
   
-  Zsig = MatrixXd(n_z_radar, 2 * n_aug + 1);
+  Zsig = MatrixXd(n_z_radar, 2 * n_aug_ + 1);
   
   for (int i=0; i<2 * n_aug_ + 1; ++i){
       
