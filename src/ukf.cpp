@@ -114,6 +114,9 @@ void UKF::UKF_test_initialise(){
 }
 
 void UKF::PrintData(){
+	std::cout << "x_ = " << std::endl << x_<< std::endl;
+	std::cout << "p_ = " << std::endl << P_<< std::endl;
+	
 	std::cout << "x_aug = " << std::endl << x_aug << std::endl;
 	std::cout << "p_aug = " << std::endl << P_aug << std::endl;
 	std::cout << "Xsig_aug = " << std::endl << Xsig_aug << std::endl;
