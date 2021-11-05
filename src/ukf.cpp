@@ -134,7 +134,7 @@ void UKF::GenerateSigmaPoint(){
   // create augmented sigma points
   
   Xsig_aug.col(0) = x_aug;
-  std::cout << "x_aug = " << std::endl << A << std::endl;
+  std::cout << "P_aug = " << std::endl << P_aug << std::endl;
   
   for(int i=0;i < n_aug_;i++){
       
