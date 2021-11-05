@@ -284,6 +284,7 @@ void UKF::PredictMeanCovariance(){
   P_ = P_ + weights_(i) * term1 * term1.transpose() ;
   
 	
+  }
 }
 
 
