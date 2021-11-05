@@ -105,6 +105,12 @@ void UKF::UKF_test_initialise(){
     0.3528, 0.299973, 0.462123, 0.376339,  0.48417, 0.418721,   0.3528,   0.3528,  0.405627, 0.243477, 0.329261,  0.22143, 0.286879,   0.3528,   0.3528,
          0,        0,        0,        0,        0,        0,  0.34641,        0,         0,        0,        0,        0,        0, -0.34641,        0,
          0,        0,        0,        0,        0,        0,        0,  0.34641,         0,        0,        0,        0,        0,        0, -0.34641;
+		 
+  // Process noise standard deviation longitudinal acceleration in m/s^2
+  std_a_ = 0.2;
+
+  // Process noise standard deviation yaw acceleration in rad/s^2
+  std_yawdd_ = 0.2;
 }
 
 void UKF::PrintData(){
