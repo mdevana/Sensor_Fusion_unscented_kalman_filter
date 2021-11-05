@@ -44,7 +44,7 @@ class UKF {
   
   void GenerateSigmaPoint();
 
-  void AugmentSigmaPoint();
+  void AugmentSigmaPoint(delta_t);
 
   void PredictSigmaPoint(double);
 

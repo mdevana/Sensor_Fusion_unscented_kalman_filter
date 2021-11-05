@@ -115,9 +115,9 @@ void UKF::UKF_test_initialise(){
 
 void UKF::PrintData(){
 	std::cout << "x_aug = " << std::endl << x_aug << std::endl;
-	std::cout << "p_aug = " << std::endl << p_aug << std::endl;
+	std::cout << "p_aug = " << std::endl << P_aug << std::endl;
 	std::cout << "Xsig_aug = " << std::endl << Xsig_aug << std::endl;
-	std::cout << "Xsig_pred = " << std::endl << Xsig_pred << std::endl;
+	std::cout << "Xsig_pred = " << std::endl << Xsig_pred_ << std::endl;
 	
 }
 
@@ -159,7 +159,7 @@ void UKF::GenerateSigmaPoint(){
 }
 
 
-void UKF::AugmentSigmaPoint(){
+void UKF::AugmentSigmaPoint(double delta_t){
 	
   Xsig_pred_.fill(0);
   double px,py,v,phi,phidot,std_a, std_yaw;
@@ -198,11 +198,11 @@ void UKF::AugmentSigmaPoint(){
       phi_i += phi + (0.5 * (delta_t * delta_t) * std_yaw);
       phidot_i += phidot + (1.0 * (delta_t) * std_yaw);
       
-      Xsig_pred(0,i) = px_i;
-      Xsig_pred(1,i) = py_i;
-      Xsig_pred(2,i) = v_i;
-      Xsig_pred(3,i) = phi_i;
-      Xsig_pred(4,i) = phidot_i;
+      Xsig_pred_(0,i) = px_i;
+      Xsig_pred_(1,i) = py_i;
+      Xsig_pred_(2,i) = v_i;
+      Xsig_pred_(3,i) = phi_i;
+      Xsig_pred_(4,i) = phidot_i;
       
       
       
