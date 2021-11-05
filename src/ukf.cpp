@@ -123,6 +123,7 @@ void UKF::GenerateSigmaPoint(){
   x_aug(n_x_) = 0;
   x_aug(n_x_ + 1) = 0;
   
+  std::cout << "x_aug= " << std::endl <<x_aug<< std::endl;
   std::cout << "std_yawdd = " << std::endl <<std_yawdd_<< std::endl;
   std::cout << "std_a = " << std::endl <<std_a_<< std::endl;
   
