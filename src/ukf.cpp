@@ -271,7 +271,7 @@ void UKF::PredictMeanCovariance(){
 
   // Predict mean of state vector based on Xsig_pred
   for (int i=0 ; i< n_x_ ; i++)
-    x_(i) = Xsig_pred_.row(i) * weights;
+    x_(i) = Xsig_pred_.row(i) * weights_;
   
 
   // predict state covariance matrix
