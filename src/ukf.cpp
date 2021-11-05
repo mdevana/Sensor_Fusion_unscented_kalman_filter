@@ -120,7 +120,7 @@ void UKF::AugmentSigmaPoint(){
 
 void UKF::PredictSigmaPoint(double delta_t){
 	
-  Xsig_pred.fill(0);
+  Xsig_pred_.fill(0);
   double px,py,v,phi,phidot,std_a, std_yaw;
   double px_i, py_i,v_i, phi_i, phidot_i;
   
@@ -158,11 +158,11 @@ void UKF::PredictSigmaPoint(double delta_t){
       phi_i += phi + (0.5 * (delta_t * delta_t) * std_yaw);
       phidot_i += phidot + (1.0 * (delta_t) * std_yaw);
       
-      Xsig_pred(0,i) = px_i;
-      Xsig_pred(1,i) = py_i;
-      Xsig_pred(2,i) = v_i;
-      Xsig_pred(3,i) = phi_i;
-      Xsig_pred(4,i) = phidot_i;
+      Xsig_pred_(0,i) = px_i;
+      Xsig_pred_(1,i) = py_i;
+      Xsig_pred_(2,i) = v_i;
+      Xsig_pred_(3,i) = phi_i;
+      Xsig_pred_(4,i) = phidot_i;
       
       
       
@@ -241,7 +241,7 @@ void UKF::Prediction(double delta_t) {
    * and the state covariance matrix.
    */
    // Predict Mean
-   for (int i=0 ; i< n_x_ ; i++)
+   /*for (int i=0 ; i< n_x_ ; i++)
     x_(i) = Xsig_pred.row(i) * weights_;
   
 
@@ -249,7 +249,7 @@ void UKF::Prediction(double delta_t) {
    for (int i=0 ; i< n_x_ ; i++){
      VectorXd term1 = Xsig_pred.row(i) - x_;
      P_.row(i) = term1 * term1.transpose() * weights_;
-   }
+   }*/
    
    
 }
@@ -263,8 +263,8 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
    */
    for (int i=0; i<2 * n_aug_ + 1; ++i){
       
-      Zsig(0,i) = Xsig_pred(0,i);
-      Zsig(1,i) = Xsig_pred(1,i);
+      Zsig(0,i) = Xsig_pred_(0,i);
+      Zsig(1,i) = Xsig_pred_(1,i);
 
   }
   
@@ -282,7 +282,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
   // transform sigma points into measurement space
   double rho,phi,rho_dot;
   double x_px, x_py, x_vel, x_phi, x_phi_dot;
-  
+  /*
   for (int i=0; i<2 * n_aug_ + 1; ++i){
       
       x_px = Xsig_pred(0,i);
@@ -327,7 +327,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
 
   }
   S = S + R;  
-   
+  */ 
    
    
    

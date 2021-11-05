@@ -45,7 +45,7 @@ class UKF {
 
   void AugmentSigmaPoint();
 
-  void PredictSigmaPoint();
+  void PredictSigmaPoint(double);
 
   void PredictMeanCovariance();
 
