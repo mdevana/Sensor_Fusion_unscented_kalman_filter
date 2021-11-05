@@ -23,12 +23,8 @@ class UKF {
    */
   void ProcessMeasurement(MeasurementPackage meas_package);
 
-  /**
-   * Prediction Predicts sigma points, the state, and the state covariance
-   * matrix
-   * @param delta_t Time between k and k+1 in s
-   */
-  void Prediction(double delta_t);
+
+
 
   /**
    * Updates the state and the state covariance matrix using a laser measurement
@@ -43,10 +39,18 @@ class UKF {
   void UpdateRadar(MeasurementPackage meas_package);
   
   void AugmentSigmaPoint();
+  
+    /**
+   * Prediction Predicts sigma points, the state, and the state covariance
+   * matrix
+   * @param delta_t Time between k and k+1 in s
+   */
 
   void PredictSigmaPoint(double);
 
   void PredictMeanCovariance();
+  
+  void UKF_Update();
   
   void UKF_test_initialise();
   void PrintData();
@@ -114,6 +118,13 @@ class UKF {
   int n_z_radar;
   int n_z_lidar;
   private:
+  
+  Eigen::MatrixXd Zsig;
+  Eigen::MatrixXd S;
+  Eigen::MatrixXd R;
+  Eigen::MatrixXd Tc;
+  Eigen::VectorXd z_pred;
+  Eigen::MatrixXd Zsig;
   
   double WrapAngle(double);
 };
