@@ -221,7 +221,7 @@ void UKF::PredictSigmaPoint(double delta_t){
       
   }
 	
-	std::cout << "Xsig_pred = " << std::endl << Xsig_pred_<< std::endl;
+	std::cout << "Xsig_pred computed= " << std::endl << Xsig_pred_<< std::endl;
 	
 	
 }
