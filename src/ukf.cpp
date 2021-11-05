@@ -353,21 +353,21 @@ void UKF::UKF_Update(){
    -0.0029937,  0.0079109, 0.00079297,   0.011249,   0.0126972;
 
   // create example matrix with sigma points in measurement space
-  Zsig = MatrixXd(n_z, 2 * n_aug + 1);
+  Zsig = MatrixXd(n_z, 2 * n_aug_ + 1);
   Zsig <<
     6.1190,  6.2334,  6.1531,  6.1283,  6.1143,  6.1190,  6.1221,  6.1190,  6.0079,  6.0883,  6.1125,  6.1248,  6.1190,  6.1188,  6.12057,
    0.24428,  0.2337, 0.27316, 0.24616, 0.24846, 0.24428, 0.24530, 0.24428, 0.25700, 0.21692, 0.24433, 0.24193, 0.24428, 0.24515, 0.245239,
     2.1104,  2.2188,  2.0639,   2.187,  2.0341,  2.1061,  2.1450,  2.1092,  2.0016,   2.129,  2.0346,  2.1651,  2.1145,  2.0786,  2.11295;
 
   // create example vector for mean predicted measurement
-  z_pred = VectorXd(n_z);
+  z_pred = VectorXd(n_z_radar);
   z_pred <<
       6.12155,
      0.245993,
       2.10313;
 
   // create example matrix for predicted measurement covariance
-  S = MatrixXd(n_z,n_z);
+  S = MatrixXd(n_z_radar,n_z_radar);
   S <<
       0.0946171, -0.000139448,   0.00407016,
    -0.000139448,  0.000617548, -0.000770652,
