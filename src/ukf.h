@@ -119,7 +119,7 @@ class UKF {
   int n_z_lidar;
   private:
   
-  Eigen::MatrixXd Zsig;
+  
   Eigen::MatrixXd S;
   Eigen::MatrixXd R;
   Eigen::MatrixXd Tc;

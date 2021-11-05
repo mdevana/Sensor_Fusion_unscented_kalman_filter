@@ -314,11 +314,17 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 
 void UKF::UKF_Update(){
 	
-  Tc = MatrixXd(n_x, n_z);
+  Tc = MatrixXd(n_x_, n_z_radar);
   Tc.fill(0);
   
   VectorXd diff_X;
   VectorXd diff_Z;
+  
+  VectorXd z = VectorXd(n_z_radar);
+   z <<
+     5.9214,   // rho in m
+     0.2187,   // phi in rad
+     2.0062;   // rho_dot in m/s
   
   
   Xsig_pred <<
@@ -408,11 +414,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
    * covariance, P_.
    * You can also calculate the radar NIS, if desired.
    */
-   VectorXd z = VectorXd(n_z);
-   z <<
-     5.9214,   // rho in m
-     0.2187,   // phi in rad
-     2.0062;   // rho_dot in m/s
+   
 
   // create matrix for cross correlation Tc
   MatrixXd Tc = MatrixXd(n_x, n_z);
