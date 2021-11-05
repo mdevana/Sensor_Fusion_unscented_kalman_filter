@@ -80,7 +80,7 @@ UKF::UKF() {
    
 }
 
-UKF::UKF_test_initialise(){
+void UKF::UKF_test_initialise(){
 	
   VectorXd x = VectorXd(n_x_);
   x <<   5.7441,
