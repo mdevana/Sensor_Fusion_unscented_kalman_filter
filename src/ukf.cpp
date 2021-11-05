@@ -222,7 +222,7 @@ void UKF::PredictSigmaPoint(double delta_t){
       
   }
 	
-	
+  std::cout << "Xsig_pred computed= " << std::endl << Xsig_pred_<< std::endl;	
 	
 	
 }
@@ -241,7 +241,7 @@ void UKF::PredictMeanCovariance(){
          0.5367, 0.47338, 0.67809, 0.55455, 0.64364, 0.54337,  0.5367, 0.53851, 0.60017, 0.39546, 0.51900, 0.42991, 0.530188,  0.5367, 0.535048,
           0.352, 0.29997, 0.46212, 0.37633,  0.4841, 0.41872,   0.352, 0.38744, 0.40562, 0.24347, 0.32926,  0.2214, 0.28687,   0.352, 0.318159;*/
 		  
-  std::cout << "Xsig_pred computed= " << std::endl << Xsig_pred_<< std::endl;
+  
 
   x_.fill(0);
   for (int i=0 ; i< 2 * n_aug_ + 1 ; i++)
