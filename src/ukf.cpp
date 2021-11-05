@@ -281,13 +281,20 @@ void UKF::PredictMeanCovariance(){
   P_.fill(0);
   for (int i=0 ; i< 2 * n_aug_ + 1; i++){
     VectorXd term1 = Xsig_pred_.col(i) - x_;
-    
-  P_ = P_ + weights_(i) * term1 * term1.transpose() ;
+    term1(3) = WrapAngle(term1(3));
+    P_ = P_ + weights_(i) * term1 * term1.transpose() ;
   
 	
   }
 }
 
+void UKF::WrapAngle(double angleValue){
+	
+	while (angleValue > M_PI ) angleValue-= 2.0 * M_PI;
+	while (angleValue < -1 * M_PI ) angleValue+= 2.0 * M_PI;
+	
+	
+}
 
 
 

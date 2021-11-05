@@ -115,6 +115,9 @@ class UKF {
   // Radar / Lidar measurement dimension
   int n_z_radar;
   int n_z_lidar;
+  private:
+  
+  void WrapAngle(double);
 };
 
 #endif  // UKF_H
