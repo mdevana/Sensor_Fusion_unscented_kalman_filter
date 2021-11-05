@@ -124,7 +124,7 @@ void UKF::PredictSigmaPoint(double delta_t){
   double px,py,v,phi,phidot,std_a, std_yaw;
   double px_i, py_i,v_i, phi_i, phidot_i;
   
-  for(int i=0;i < 2 * n_aug + 1;i++){
+  for(int i=0;i < 2 * n_aug_ + 1;i++){
 	  
       px = Xsig_aug(0,i);
       py = Xsig_aug(1,i);
@@ -263,8 +263,8 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
    */
    for (int i=0; i<2 * n_aug_ + 1; ++i){
       
-      Zsig(0,i) = Xsig_pred_(0,i);
-      Zsig(1,i) = Xsig_pred_(1,i);
+      //Zsig(0,i) = Xsig_pred_(0,i);
+      //Zsig(1,i) = Xsig_pred_(1,i);
 
   }
   
