@@ -123,6 +123,9 @@ void UKF::GenerateSigmaPoint(){
   x_aug(n_x_) = 0;
   x_aug(n_x_ + 1) = 0;
   
+  std::cout << "std_yawdd = " << std::endl <<std_yawdd_<< std::endl;
+  std::cout << "std_a = " << std::endl <<std_a_<< std::endl;
+  
   // create augmented covariance matrix
   P_aug.topLeftCorner(n_x_, n_x_) = P_;
   P_aug(n_x_, n_x_) =  std_a_ * std_a_;
