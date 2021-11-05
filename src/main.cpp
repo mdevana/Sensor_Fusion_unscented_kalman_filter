@@ -35,6 +35,7 @@ int main() {
   // Create a Kalman Filter instance
   UKF ukf;
   ukf.UKF_test_initialise();
+  ukf.GenerateSigmaPoint();
   ukf.PrintData();
 
   // used to compute the RMSE later
