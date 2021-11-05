@@ -386,6 +386,9 @@ void UKF::UKF_Update(){
   
   x_ = x_ + Kgain * (z - z_pred);
   P_ = P_ - Kgain * S * Kgain.transpose();
+  
+  std::cout << "x_ = " << std::endl << x_ << std::endl;
+  std::cout << "p_ = " << std::endl << P_ << std::endl;
 	
 	
 }
