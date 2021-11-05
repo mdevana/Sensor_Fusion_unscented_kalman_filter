@@ -374,7 +374,7 @@ void UKF::UKF_Update(){
      0.00407016, -0.000770652,    0.0180917;
   
   for(int k = 0; k < 2 * n_aug_ + 1 ; k++  ) {
-      diff_X = Xsig_pred.col(k) - x_;
+      diff_X = Xsig_pred_.col(k) - x_;
       diff_Z = Zsig.col(k) - z_pred;
       
       Tc = Tc + weights_(k) * diff_X * diff_Z.transpose();
