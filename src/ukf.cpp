@@ -114,13 +114,14 @@ void UKF::UKF_test_initialise(){
 }
 
 void UKF::PrintData(){
+	std::cout << "Weights = " << std::endl << weights_<< std::endl;
 	std::cout << "x_ = " << std::endl << x_<< std::endl;
 	std::cout << "p_ = " << std::endl << P_<< std::endl;
 	
-	std::cout << "x_aug = " << std::endl << x_aug << std::endl;
-	std::cout << "p_aug = " << std::endl << P_aug << std::endl;
-	std::cout << "Xsig_aug = " << std::endl << Xsig_aug << std::endl;
-	std::cout << "Xsig_pred = " << std::endl << Xsig_pred_ << std::endl;
+	//std::cout << "x_aug = " << std::endl << x_aug << std::endl;
+	//std::cout << "p_aug = " << std::endl << P_aug << std::endl;
+	//std::cout << "Xsig_aug = " << std::endl << Xsig_aug << std::endl;
+	//std::cout << "Xsig_pred = " << std::endl << Xsig_pred_ << std::endl;
 	
 }
 
@@ -148,7 +149,7 @@ void UKF::AugmentSigmaPoint(){
   // create augmented sigma points
   
   Xsig_aug.col(0) = x_aug;
-  std::cout << "P_aug = " << std::endl << P_aug << std::endl;
+  //std::cout << "P_aug = " << std::endl << P_aug << std::endl;
   
   for(int i=0;i < n_aug_;i++){
       
@@ -229,9 +230,8 @@ void UKF::PredictMeanCovariance(){
   for (int i=0 ; i< 2 * n_aug_ + 1; i++){
     VectorXd term1 = Xsig_pred_.col(i) - x_;
     term1(3) = WrapAngle(term1(3));
-    P_ = P_ + weights_(i) * term1 * term1.transpose() ;
-  
-	
+    P_ = P_ + weights_(i) * term1 * term1.transpose();
+
   }
 }
 
