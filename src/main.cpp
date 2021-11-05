@@ -33,12 +33,14 @@ int main() {
   uWS::Hub h;
 
   // Create a Kalman Filter instance
+  MeasurementPackage meas_package;
   UKF ukf;
   ukf.UKF_test_initialise();
   
   ukf.AugmentSigmaPoint();
   ukf.PredictSigmaPoint(0.1);
   ukf.PredictMeanCovariance();
+  UKF.UpdateRadar(MeasurementPackage meas_package)
   //ukf.PrintData();
 
   // used to compute the RMSE later
