@@ -37,6 +37,7 @@ int main() {
   ukf.UKF_test_initialise();
   ukf.GenerateSigmaPoint();
   ukf.AugmentSigmaPoint(0.1);
+  ukf.PredictMeanCovariance();
   ukf.PrintData();
 
   // used to compute the RMSE later
