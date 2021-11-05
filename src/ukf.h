@@ -117,7 +117,7 @@ class UKF {
   int n_z_lidar;
   private:
   
-  void WrapAngle(double);
+  double WrapAngle(double);
 };
 
 #endif  // UKF_H

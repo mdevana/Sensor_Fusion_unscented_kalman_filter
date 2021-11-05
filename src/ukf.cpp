@@ -288,11 +288,12 @@ void UKF::PredictMeanCovariance(){
   }
 }
 
-void UKF::WrapAngle(double angleValue){
+double UKF::WrapAngle(double angleValue){
 	
 	while (angleValue > M_PI ) angleValue-= 2.0 * M_PI;
 	while (angleValue < -1 * M_PI ) angleValue+= 2.0 * M_PI;
 	
+	return (angleValue);
 	
 }
 
