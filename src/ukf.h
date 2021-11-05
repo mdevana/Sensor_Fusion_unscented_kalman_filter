@@ -42,9 +42,7 @@ class UKF {
    */
   void UpdateRadar(MeasurementPackage meas_package);
   
-  void GenerateSigmaPoint();
-
-  void AugmentSigmaPoint(double);
+  void AugmentSigmaPoint();
 
   void PredictSigmaPoint(double);
 

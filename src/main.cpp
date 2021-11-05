@@ -35,8 +35,9 @@ int main() {
   // Create a Kalman Filter instance
   UKF ukf;
   ukf.UKF_test_initialise();
-  ukf.GenerateSigmaPoint();
-  ukf.AugmentSigmaPoint(0.1);
+  
+  ukf.AugmentSigmaPoint();
+  ukf.PredictSigmaPoint(0.1);
   ukf.PredictMeanCovariance();
   ukf.PrintData();
 
