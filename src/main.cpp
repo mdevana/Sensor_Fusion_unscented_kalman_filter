@@ -40,7 +40,7 @@ int main() {
   ukf.AugmentSigmaPoint();
   ukf.PredictSigmaPoint(0.1);
   ukf.PredictMeanCovariance();
-  ukf.UpdateRadar(MeasurementPackage meas_package);
+  ukf.UpdateRadar(meas_package);
   //ukf.PrintData();
 
   // used to compute the RMSE later
