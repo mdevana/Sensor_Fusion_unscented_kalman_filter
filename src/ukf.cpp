@@ -394,8 +394,8 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
   // calculate innovation covariance matrix S
   
   R = MatrixXd(n_z_lidar,n_z_lidar);
-  R<< std_laspx_ * std_laspx_,0,0,
-      0,std_laspy_ * std_laspy_,0;
+  R<< std_laspx_ * std_laspx_,0,
+      0,std_laspy_ * std_laspy_;
 
   
   S = MatrixXd(n_z_lidar,n_z_lidar);
