@@ -123,6 +123,8 @@ int main() {
           //   state vector
 
           VectorXd estimate(4);
+		  
+		  std::cout << "In Main  X: " << std::endl<<ukf.x_<<std::endl;
 
           double p_x = ukf.x_(0);
           double p_y = ukf.x_(1);
