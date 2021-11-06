@@ -121,7 +121,7 @@ class UKF {
   int n_z_lidar;
   
   // NIS (Normalised Innovation Square)
-  double NIS_laser_;
+  double NIS_lidar_;
   double NIS_radar_;
   
   
