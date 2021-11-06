@@ -119,6 +119,12 @@ class UKF {
   // Radar / Lidar measurement dimension
   int n_z_radar;
   int n_z_lidar;
+  
+  // NIS (Normalised Innovation Square)
+  double NIS_laser_;
+  double NIS_radar_;
+  
+  
   private:
   
   
