@@ -384,7 +384,7 @@ void UKF::UKF_Update(int mea_type){
   x_ = x_ + Kgain * diff_z;
   P_ = P_ - Kgain * S * Kgain.transpose();
   
-  NIS_radar = diff_z.transpose * S.inverse() * diff_z;
+  NIS_radar = diff_z.transpose() * S.inverse() * diff_z;
   
   std::cout << "x_ = " << std::endl << x_ << std::endl;
   std::cout << "p_ = " << std::endl << P_ << std::endl;
