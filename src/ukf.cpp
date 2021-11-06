@@ -276,10 +276,12 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 			0;
 
     }
+	is_initialized_ = true;
 	previous_timestamp_=meas_pack.timestamp_;
 	std::cout << "After initialisation X " << std::endl<<x_<<std::endl;
 	
    }
+   
    
    // Stage after initialisation
    else {
@@ -309,7 +311,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 
    } else if (use_laser_){
     // Laser updates
-	std::cout << "Processing Laser Measurements " << std::endl;
+	std::cout << "Processing Lidar Measurements " << std::endl;
 	z=VectorXd(2);
 	z<< meas_pack.raw_measurements_[0],meas_pack.raw_measurements_[1];
 	
