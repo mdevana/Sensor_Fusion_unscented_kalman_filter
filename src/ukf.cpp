@@ -318,7 +318,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 	AugmentSigmaPoint();
     PredictSigmaPoint(dt);
     PredictMeanCovariance();
-    UpdateRadar(meas_pack);
+    UpdateLidar(meas_pack);
     UKF_Update(n_z_lidar);
 	
 	std::cout << "Z Value " << std::endl<<z<<std::endl;
