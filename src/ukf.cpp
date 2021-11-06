@@ -306,7 +306,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
     
    
    float dt = (meas_pack.timestamp_-previous_timestamp_)/1000000.0;
-   previous_timestamp_=measurement_pack.timestamp_;
+   previous_timestamp_=meas_pack.timestamp_;
 	
 	
 	if ((meas_pack.sensor_type_ == MeasurementPackage::RADAR) && (use_radar_ == true)) {
