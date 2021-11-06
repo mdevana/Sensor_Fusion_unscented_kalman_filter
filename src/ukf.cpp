@@ -369,7 +369,7 @@ void UKF::UKF_Update(int mea_type){
   VectorXd diff_X;
   VectorXd diff_Z;
   
-  VectorXd z = VectorXd(n_z_radar);
+  /*VectorXd z = VectorXd(n_z_radar);
    z <<
      5.9214,   // rho in m
      0.2187,   // phi in rad
@@ -420,7 +420,7 @@ void UKF::UKF_Update(int mea_type){
   S <<
       0.0946171, -0.000139448,   0.00407016,
    -0.000139448,  0.000617548, -0.000770652,
-     0.00407016, -0.000770652,    0.0180917;
+     0.00407016, -0.000770652,    0.0180917;*/
   
   for(int k = 0; k < 2 * n_aug_ + 1 ; k++  ) {
       diff_X = Xsig_pred_.col(k) - x_;
