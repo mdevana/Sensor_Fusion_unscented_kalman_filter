@@ -331,7 +331,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
     PredictSigmaPoint(dt);
     PredictMeanCovariance();
     UpdateRadar(meas_pack);
-    UKF_Update(1);
+    UKF_Update(n_z_radar);
 	
 	
 	std::cout << "Z Value " << std::endl<<z<<std::endl;
@@ -359,9 +359,9 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 }
 
 
-void UKF::UKF_Update(int mea_type){
+void UKF::UKF_Update(int n_z){
 	
-  Tc = MatrixXd(n_x_, n_z_radar);
+  Tc = MatrixXd(n_x_, n_z);
   Tc.fill(0);
   
   VectorXd diff_X;
@@ -399,14 +399,42 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
    * covariance, P_.
    * You can also calculate the lidar NIS, if desired.
    */
+   
+   
+   Zsig = MatrixXd(n_z_radar, 2 * n_aug_ + 1);
    for (int i=0; i<2 * n_aug_ + 1; ++i){
       
-      //Zsig(0,i) = Xsig_pred_(0,i);
-      //Zsig(1,i) = Xsig_pred_(1,i);
+      Zsig(0,i) = Xsig_pred_(0,i);
+      Zsig(1,i) = Xsig_pred_(1,i);
 
   }
   
+  // calculate mean predicted measurement
+  z_pred = VectorXd(n_z_lidar);
+  z_pred.fill(0.0);
+  for (int j=0; j< 2 * n_aug_ + 1; ++j){
+      z_pred = z_pred + Zsig.col(j) * weights_(j);
+      
+  }
   
+  // calculate innovation covariance matrix S
+  
+  R = MatrixXd(n_z_lidar,n_z_lidar);
+  R<< std_laspx_ * std_laspx_,0,0,
+      0,std_laspy_ * std_laspy_,0;
+
+  
+  S = MatrixXd(n_z_lidar,n_z_lidar);
+  S.fill(0.0);      
+  for (int k=0; k < 2 * n_aug_ + 1; ++k){
+
+      
+      VectorXd diff = Zsig.col(k) - z_pred;
+      S = S + diff * diff.transpose() * weights_(k);
+
+  }
+  S = S + R;  
+
 }
 
 void UKF::UpdateRadar(MeasurementPackage meas_package) {
