@@ -8,8 +8,13 @@ using Eigen::VectorXd;
  * Initializes Unscented Kalman filter
  */
 UKF::UKF() {
+	
+	
+  // if this is false, then state vector is initialised using measurements	
+  is_initialized_ = false;
+  
   // if this is false, laser measurements will be ignored (except during init)
-  use_laser_ = true;
+  use_laser_ = false;
 
   // if this is false, radar measurements will be ignored (except during init)
   use_radar_ = true;
@@ -259,12 +264,15 @@ double UKF::WrapAngle(double angleValue){
 
 void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
   /**
-   * TODO: Complete this function! Make sure you switch between lidar and radar
-   * measurements.
+   * switch between lidar and radar measurements.
    */
-   if (meas_pack.sensor_type_ == MeasurementPackage::RADAR) {
-      // TODO: Convert radar from polar to cartesian coordinates 
-      //         and initialize state.
+   
+   if (!is_initialized_) {
+	// Initialise the state vector   
+	if (meas_pack.sensor_type_ == MeasurementPackage::RADAR) {
+      // Convert radar from polar to cartesian coordinates 
+      // and initialize state.
+	  
 	  float rho_mea=meas_pack.raw_measurements_[0];
 	  float theta_mea=meas_pack.raw_measurements_[1];
 	  float rhodot_mea=meas_pack.raw_measurements_[2];
@@ -273,8 +281,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 	  float py = rho_mea * sin(theta_mea);
 	  float vx = rhodot_mea * cos( theta_mea);
 	  float vy = rhodot_mea * cos( theta_mea);
-	  
-	  
+	  	  
 	  x_ << px, 
 		    py, 
             sqrt(vx * vx + vy * vy), 
@@ -283,7 +290,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 
     }
     else if (meas_pack.sensor_type_ == MeasurementPackage::LASER) {
-      // TODO: Initialize state.
+      // Initialize state.
 	  x_ << meas_pack.raw_measurements_[0], 
             meas_pack.raw_measurements_[1], 
             0, 
@@ -291,28 +298,45 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 			0;
 
     }
+	previous_timestamp_=measurement_pack.timestamp_;
+   }
+   
+   // Stage after initialisation
+   else {
+    
+   previous_timestamp_= measurement_pack.timestamp_;	
+   float dt = (measurement_pack.timestamp_-previous_timestamp_)/1000000.0;
+   previous_timestamp_=measurement_pack.timestamp_;
 	
 	
-	if (meas_pack.sensor_type_ == MeasurementPackage::RADAR) {
-    // TODO: Radar updates
-	VectorXd z=VectorXd(3);
+	if (meas_pack.sensor_type_ == MeasurementPackage::RADAR) && (use_radar_) {
+    // Radar updates
+	std::cout << "Processing Radar Measurements " << std::endl;
+	std::cout << "Z Value " << std::endl<<z<<std::endl;
+	z=VectorXd(3);
 	z<< meas_pack.raw_measurements_[0],meas_pack.raw_measurements_[1],meas_pack.raw_measurements_[2];
-	
+	std::cout << "Z Value " << std::endl<<z<<std::endl;
 
-  } else {
-    // TODO: Laser updates
-	VectorXd z=VectorXd(2);
+   } else if (use_laser_){
+    // Laser updates
+	std::cout << "Processing Laser Measurements " << std::endl;
+	z=VectorXd(2);
 	z<< meas_pack.raw_measurements_[0],meas_pack.raw_measurements_[1];
 	
+	std::cout << "Z Value " << std::endl<<z<<std::endl;
+	
 
-  }
+   }
+ }// End Else module
    
    
    
 }
 
 
-void UKF::UKF_Update(){
+void UKF::UKF_Update(int mea_type){
+	
+  
 	
   Tc = MatrixXd(n_x_, n_z_radar);
   Tc.fill(0);
@@ -335,7 +359,7 @@ void UKF::UKF_Update(){
       0.352, 0.29997, 0.46212, 0.37633,  0.4841, 0.41872,   0.352, 0.38744, 0.40562, 0.24347, 0.32926,  0.2214, 0.28687,   0.352, 0.318159;
 
   // create example vector for predicted state mean
-  x_ = VectorXd(n_x_);
+  
   x_ <<
      5.93637,
      1.49035,
@@ -344,7 +368,7 @@ void UKF::UKF_Update(){
     0.353577;
 
   // create example matrix for predicted state covariance
-  P_ = MatrixXd(n_x_,n_x_);
+  
   P_ <<
     0.0054342,  -0.002405,  0.0034157, -0.0034819, -0.00299378,
     -0.002405,    0.01084,   0.001492,  0.0098018,  0.00791091,

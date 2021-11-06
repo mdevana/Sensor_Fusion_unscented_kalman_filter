@@ -125,6 +125,7 @@ class UKF {
   Eigen::MatrixXd Tc;
   Eigen::VectorXd z_pred;
   Eigen::MatrixXd Zsig;
+  Eigen::VectorXd z;
   
   double WrapAngle(double);
 };
