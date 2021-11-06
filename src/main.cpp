@@ -139,10 +139,12 @@ int main() {
           estimate(2) = v1;
           estimate(3) = v2;
           
-		  std::cout << "crash point RMSE "<< std::endl;
+		  
           estimations.push_back(estimate);
 
           VectorXd RMSE = tools.CalculateRMSE(estimations, ground_truth);
+		  
+		  std::cout << "crash point after RMSE "<< std::endl;
 
           json msgJson;
           msgJson["estimate_x"] = p_x;
