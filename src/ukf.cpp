@@ -327,6 +327,12 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 	
 
    }
+   x_ <<
+     5.93637,
+     1.49035,
+     2.20528,
+    0.536853,
+    0.353577;
  }// End Else module
    
    
