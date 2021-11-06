@@ -138,7 +138,8 @@ int main() {
           estimate(1) = p_y;
           estimate(2) = v1;
           estimate(3) = v2;
-        
+          
+		  std::cout << "crash point RMSE "<< std::endl;
           estimations.push_back(estimate);
 
           VectorXd RMSE = tools.CalculateRMSE(estimations, ground_truth);
@@ -151,7 +152,7 @@ int main() {
           msgJson["rmse_vx"] = RMSE(2);
           msgJson["rmse_vy"] = RMSE(3);
           auto msg = "42[\"estimate_marker\"," + msgJson.dump() + "]";
-          std::cout << msg << std::endl;
+          //std::cout << msg << std::endl;
           ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
 
         }  // end "telemetry" if
