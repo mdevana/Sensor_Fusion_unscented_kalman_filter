@@ -309,7 +309,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
     PredictSigmaPoint(dt);
     PredictMeanCovariance();
     UpdateRadar(meas_pack);
-    UKF_Update(n_z_radar);
+    //UKF_Update(n_z_radar);
 	
 	
 	std::cout << "Z Value " << std::endl<<z<<std::endl;
@@ -324,7 +324,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
     PredictSigmaPoint(dt);
     PredictMeanCovariance();
     UpdateLidar(meas_pack);
-    UKF_Update(n_z_lidar);
+    //UKF_Update(n_z_lidar);
 	
 	std::cout << "Z Value " << std::endl<<z<<std::endl;
 	
@@ -413,6 +413,35 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
 
   }
   S = S + R;  
+  
+  Tc = MatrixXd(n_x_, n_z_lidar);
+  Tc.fill(0);
+  
+  VectorXd diff_X;
+  VectorXd diff_Z;
+  
+  for(int k = 0; k < 2 * n_aug_ + 1 ; k++  ) {
+      diff_X = Xsig_pred_.col(k) - x_;
+      diff_Z = Zsig.col(k) - z_pred;
+      
+      Tc = Tc + weights_(k) * diff_X * diff_Z.transpose();
+      
+  }
+  
+  MatrixXd Kgain;
+  VectorXd diff_z;
+  
+  Kgain = Tc * S.inverse();
+  diff_z = z - z_pred;
+  
+  x_ = x_ + Kgain * diff_z;
+  P_ = P_ - Kgain * S * Kgain.transpose();
+  
+  NIS_lidar_ = diff_z.transpose() * S.inverse() * diff_z;
+  
+  std::cout << "x_ = " << std::endl << x_ << std::endl;
+  std::cout << "p_ = " << std::endl << P_ << std::endl;
+  
 
 }
 
@@ -479,5 +508,39 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
 
   }
   S = S + R;  
+  
+  
+  Tc = MatrixXd(n_x_, n_z_radar);
+  Tc.fill(0);
+  
+  VectorXd diff_X;
+  VectorXd diff_Z;
+  
+  for(int k = 0; k < 2 * n_aug_ + 1 ; k++  ) {
+      diff_X = Xsig_pred_.col(k) - x_;
+      diff_Z = Zsig.col(k) - z_pred;
+	  
+	  diff_Z(1)=WrapAngle(diff_Z(1));
+	  diff_X(1)=WrapAngle(diff_X(1));
+	  
+      
+      Tc = Tc + weights_(k) * diff_X * diff_Z.transpose();
+      
+  }
+  
+  MatrixXd Kgain;
+  VectorXd diff_z;
+  
+  Kgain = Tc * S.inverse();
+  diff_z = z - z_pred;
+  diff_z(1)=WrapAngle(diff_z(1));
+  
+  x_ = x_ + Kgain * diff_z;
+  P_ = P_ - Kgain * S * Kgain.transpose();
+  
+  NIS_radar_ = diff_z.transpose() * S.inverse() * diff_z;
+  
+  std::cout << "x_ = " << std::endl << x_ << std::endl;
+  std::cout << "p_ = " << std::endl << P_ << std::endl;
 
 }
