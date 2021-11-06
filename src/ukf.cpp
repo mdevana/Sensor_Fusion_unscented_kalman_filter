@@ -331,7 +331,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
     PredictSigmaPoint(dt);
     PredictMeanCovariance();
     UpdateRadar(meas_package);
-    ukf.UKF_Update(1);
+    UKF_Update(1);
 	
 	
 	std::cout << "Z Value " << std::endl<<z<<std::endl;
