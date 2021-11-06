@@ -59,6 +59,13 @@ UKF::UKF() {
    * TODO: Complete the initialization. See ukf.h for other member properties.
    * Hint: one or more values initialized above might be wildly off...
    */
+   
+   P_ << .05, 0, 0, 0, 0,
+           0, .05, 0, 0, 0,
+           0, 0, .6, 0, 0,
+           0, 0, 0, 1.15, 0,
+           0, 0, 0, 0, .15;
+   
    n_x_ = 5;
    n_aug_ = 7;
    n_z_radar = 3;
@@ -319,6 +326,14 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 	std::cout << "Z Value " << std::endl<<z<<std::endl;
 	z=VectorXd(3);
 	z<< meas_pack.raw_measurements_[0],meas_pack.raw_measurements_[1],meas_pack.raw_measurements_[2];
+	
+	AugmentSigmaPoint();
+    PredictSigmaPoint(dt);
+    PredictMeanCovariance();
+    UpdateRadar(meas_package);
+    ukf.UKF_Update(1);
+	
+	
 	std::cout << "Z Value " << std::endl<<z<<std::endl;
 
    } else if (use_laser_){
