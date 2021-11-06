@@ -35,14 +35,14 @@ int main() {
   // Create a Kalman Filter instance
   MeasurementPackage meas_package;
   UKF ukf;
-  ukf.UKF_test_initialise();
+  //ukf.UKF_test_initialise();
   
-  ukf.AugmentSigmaPoint();
-  ukf.PredictSigmaPoint(0.1);
-  ukf.PredictMeanCovariance();
-  ukf.UpdateRadar(meas_package);
-  ukf.UKF_Update(1);
-  ukf.PrintData();
+  //ukf.AugmentSigmaPoint();
+  //ukf.PredictSigmaPoint(0.1);
+  //ukf.PredictMeanCovariance();
+  //ukf.UpdateRadar(meas_package);
+  //ukf.UKF_Update(1);
+  //ukf.PrintData();
 
   // used to compute the RMSE later
   Tools tools;

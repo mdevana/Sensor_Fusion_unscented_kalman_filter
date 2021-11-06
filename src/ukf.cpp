@@ -267,6 +267,8 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
    * switch between lidar and radar measurements.
    */
    
+   std::cout << "In process measurement " << std::endl<<x_<<std::endl;
+   
    if (!is_initialized_) {
 	// Initialise the state vector   
 	if (meas_pack.sensor_type_ == MeasurementPackage::RADAR) {
@@ -299,7 +301,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 
     }
 	previous_timestamp_=meas_pack.timestamp_;
-	
+	std::cout << "After initialisation X " << std::endl<<x_<<std::endl;
 	std::cout << "X Value " << std::endl<<x_<<std::endl;
    }
    
