@@ -299,6 +299,8 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 
     }
 	previous_timestamp_=meas_pack.timestamp_;
+	
+	std::cout << "X Value " << std::endl<<x_<<std::endl;
    }
    
    // Stage after initialisation
