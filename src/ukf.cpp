@@ -318,6 +318,10 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
    
    float dt = (meas_pack.timestamp_-previous_timestamp_)/1000000.0;
    previous_timestamp_=meas_pack.timestamp_;
+   
+   AugmentSigmaPoint();
+   PredictSigmaPoint(dt);
+   PredictMeanCovariance();
 	
 	
 	if ((meas_pack.sensor_type_ == MeasurementPackage::RADAR) && (use_radar_ == true)) {
@@ -327,9 +331,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 	z=VectorXd(3);
 	z<< meas_pack.raw_measurements_[0],meas_pack.raw_measurements_[1],meas_pack.raw_measurements_[2];
 	
-	AugmentSigmaPoint();
-    PredictSigmaPoint(dt);
-    PredictMeanCovariance();
+	
     UpdateRadar(meas_pack);
     UKF_Update(n_z_radar);
 	
