@@ -330,7 +330,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 	AugmentSigmaPoint();
     PredictSigmaPoint(dt);
     PredictMeanCovariance();
-    UpdateRadar(meas_package);
+    UpdateRadar(meas_pack);
     UKF_Update(1);
 	
 	
