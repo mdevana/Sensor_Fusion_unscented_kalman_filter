@@ -302,7 +302,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
     }
 	previous_timestamp_=meas_pack.timestamp_;
 	std::cout << "After initialisation X " << std::endl<<x_<<std::endl;
-	std::cout << "X Value " << std::endl<<x_<<std::endl;
+	
    }
    
    // Stage after initialisation
@@ -331,12 +331,12 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 	
 
    }
-   x_ <<
+   /*x_ <<
      5.93637,
      1.49035,
      2.20528,
     0.536853,
-    0.353577;
+    0.353577;*/
  }// End Else module
    
    
