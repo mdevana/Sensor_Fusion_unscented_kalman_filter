@@ -298,18 +298,18 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 			0;
 
     }
-	previous_timestamp_=measurement_pack.timestamp_;
+	previous_timestamp_=meas_pack.timestamp_;
    }
    
    // Stage after initialisation
    else {
     
-   previous_timestamp_= measurement_pack.timestamp_;	
-   float dt = (measurement_pack.timestamp_-previous_timestamp_)/1000000.0;
+   
+   float dt = (meas_pack.timestamp_-previous_timestamp_)/1000000.0;
    previous_timestamp_=measurement_pack.timestamp_;
 	
 	
-	if (meas_pack.sensor_type_ == MeasurementPackage::RADAR) && (use_radar_) {
+	if ((meas_pack.sensor_type_ == MeasurementPackage::RADAR) && (use_radar_ == true)) {
     // Radar updates
 	std::cout << "Processing Radar Measurements " << std::endl;
 	std::cout << "Z Value " << std::endl<<z<<std::endl;

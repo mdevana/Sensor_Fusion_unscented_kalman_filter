@@ -50,7 +50,7 @@ class UKF {
 
   void PredictMeanCovariance();
   
-  void UKF_Update();
+  void UKF_Update(int);
   
   void UKF_test_initialise();
   void PrintData();
@@ -64,6 +64,8 @@ class UKF {
 
   // if this is false, radar measurements will be ignored (except for init)
   bool use_radar_;
+  
+  double previous_timestamp_; 
 
   // state vector: [pos1 pos2 vel_abs yaw_angle yaw_rate] in SI units and rad
   Eigen::VectorXd x_;
