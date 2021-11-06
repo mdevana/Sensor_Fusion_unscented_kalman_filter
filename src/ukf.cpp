@@ -375,7 +375,7 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
    */
    
    
-   Zsig = MatrixXd(n_z_radar, 2 * n_aug_ + 1);
+   Zsig = MatrixXd(n_z_lidar, 2 * n_aug_ + 1);
    for (int i=0; i<2 * n_aug_ + 1; ++i){
       
       Zsig(0,i) = Xsig_pred_(0,i);
