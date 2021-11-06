@@ -52,7 +52,7 @@ class UKF {
   
   void UKF_Update(int);
   
-  void UKF_test_initialise();
+
   void PrintData();
 
 
