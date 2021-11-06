@@ -123,8 +123,6 @@ int main() {
           //   state vector
 
           VectorXd estimate(4);
-		  
-		  std::cout << "In Main  X: " << std::endl<<ukf.x_<<std::endl;
 
           double p_x = ukf.x_(0);
           double p_y = ukf.x_(1);
@@ -144,7 +142,7 @@ int main() {
 		  VectorXd RMSE(4);
           RMSE = tools.CalculateRMSE(estimations, ground_truth);
 		  
-		  std::cout << "RMSE values :"<< RMSE(0)<<" "<<RMSE(1)<<" "<<RMSE(2)<<" "<<RMSE(3)<<std::endl;
+		  //std::cout << "RMSE values :"<< RMSE(0)<<" "<<RMSE(1)<<" "<<RMSE(2)<<" "<<RMSE(3)<<std::endl;
 
           json msgJson;
           msgJson["estimate_x"] = p_x;
