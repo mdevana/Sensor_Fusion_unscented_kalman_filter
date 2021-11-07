@@ -248,7 +248,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
    * switch between lidar and radar measurements.
    */
    
-   std::cout << "In process measurement " << std::endl<<x_<<std::endl;
+   //std::cout << "In process measurement " << std::endl<<x_<<std::endl;
    
    if (!is_initialized_) {
 	// Initialise the state vector   
@@ -284,7 +284,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
     }
 	is_initialized_ = true;
 	previous_timestamp_=meas_pack.timestamp_;
-	std::cout << "After initialisation X " << std::endl<<x_<<std::endl;
+	//std::cout << "After initialisation X " << std::endl<<x_<<std::endl;
 	
    }
    
@@ -441,8 +441,8 @@ void UKF::UpdateLidar(MeasurementPackage meas_pack) {
   
   NIS_lidar_ = diff_z.transpose() * S.inverse() * diff_z;
   
-  std::cout << "x_ = " << std::endl << x_ << std::endl;
-  std::cout << "p_ = " << std::endl << P_ << std::endl;
+  //std::cout << "x_ = " << std::endl << x_ << std::endl;
+  //std::cout << "p_ = " << std::endl << P_ << std::endl;
   
 
 }
@@ -548,7 +548,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
   
   NIS_radar_ = diff_z.transpose() * S.inverse() * diff_z;
   
-  std::cout << "x_ = " << std::endl << x_ << std::endl;
-  std::cout << "p_ = " << std::endl << P_ << std::endl;
+  //std::cout << "x_ = " << std::endl << x_ << std::endl;
+  //std::cout << "p_ = " << std::endl << P_ << std::endl;
 
 }
