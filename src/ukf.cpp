@@ -260,14 +260,15 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 	  float theta_mea=meas_pack.raw_measurements_[1];
 	  float rhodot_mea=meas_pack.raw_measurements_[2];
 	  
-	  float px = rho_mea * cos( theta_mea);
+	  float px = rho_mea * cos(theta_mea);
 	  float py = rho_mea * sin(theta_mea);
 	  float vx = rhodot_mea * cos( theta_mea);
 	  float vy = rhodot_mea * cos( theta_mea);
+	  float v = sqrt(vx * vx + vy * vy);
 	  	  
 	  x_ << px, 
 		    py, 
-            sqrt(vx * vx + vy * vy), 
+            0, 
             0,
 			0; 
 
@@ -294,7 +295,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
    
    float dt = (meas_pack.timestamp_-previous_timestamp_)/1000000.0;
    previous_timestamp_=meas_pack.timestamp_;
-   
+   std::cout << "Time Step : " <<dt<<std::endl;
    
 	
 	
