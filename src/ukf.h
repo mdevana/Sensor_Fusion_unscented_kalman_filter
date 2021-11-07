@@ -128,11 +128,11 @@ class UKF {
   private:
   
   
-  Eigen::MatrixXd S;
-  Eigen::MatrixXd R;
-  Eigen::MatrixXd Tc;
-  Eigen::VectorXd z_pred;
-  Eigen::MatrixXd Zsig;
+  //Eigen::MatrixXd S;
+  //Eigen::MatrixXd R;
+  //Eigen::MatrixXd Tc;
+  //Eigen::VectorXd z_pred;
+  //Eigen::MatrixXd Zsig;
   
   
   double WrapAngle(double);

@@ -390,7 +390,7 @@ void UKF::UpdateLidar(MeasurementPackage meas_pack) {
    */
    
    
-   Zsig = MatrixXd(n_z_lidar, 2 * n_aug_ + 1);
+   MatrixXd Zsig = MatrixXd(n_z_lidar, 2 * n_aug_ + 1);
    for (int i=0; i<2 * n_aug_ + 1; ++i){
       
       Zsig(0,i) = Xsig_pred_(0,i);
@@ -399,7 +399,7 @@ void UKF::UpdateLidar(MeasurementPackage meas_pack) {
   }
   
   // calculate mean predicted measurement
-  z_pred = VectorXd(n_z_lidar);
+  VectorXd z_pred = VectorXd(n_z_lidar);
   z_pred.fill(0.0);
   for (int j=0; j< 2 * n_aug_ + 1; ++j){
       z_pred = z_pred + Zsig.col(j) * weights_(j);
@@ -408,12 +408,12 @@ void UKF::UpdateLidar(MeasurementPackage meas_pack) {
   
   // calculate innovation covariance matrix S
   
-  R = MatrixXd(n_z_lidar,n_z_lidar);
+  MatrixXd R = MatrixXd(n_z_lidar,n_z_lidar);
   R<< std_laspx_ * std_laspx_,0,
       0,std_laspy_ * std_laspy_;
 
   
-  S = MatrixXd(n_z_lidar,n_z_lidar);
+  MatrixXd S = MatrixXd(n_z_lidar,n_z_lidar);
   S.fill(0.0);      
   for (int k=0; k < 2 * n_aug_ + 1; ++k){
 
@@ -424,7 +424,7 @@ void UKF::UpdateLidar(MeasurementPackage meas_pack) {
   }
   S = S + R;  
   
-  Tc = MatrixXd(n_x_, n_z_lidar);
+  MatrixXd Tc = MatrixXd(n_x_, n_z_lidar);
   Tc.fill(0);
   
   VectorXd diff_X;
@@ -467,15 +467,13 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
    */
    
 
-  // create matrix for cross correlation Tc
-  Tc = MatrixXd(n_x_, n_z_radar);
-   
+
    
   // transform sigma points into measurement space
   double rho,phi,rho_dot;
   double x_px, x_py, x_vel, x_phi, x_phi_dot;
   
-  Zsig = MatrixXd(n_z_radar, 2 * n_aug_ + 1);
+  MatrixXd Zsig = MatrixXd(n_z_radar, 2 * n_aug_ + 1);
   
   for (int i=0; i<2 * n_aug_ + 1; ++i){
       
@@ -500,7 +498,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
   }
    
   // calculate mean predicted measurement
-  z_pred = VectorXd(n_z_radar);
+  VectorXd z_pred = VectorXd(n_z_radar);
   z_pred.fill(0.0);
   for (int j=0; j< 2 * n_aug_ + 1; ++j){
       z_pred = z_pred + Zsig.col(j) * weights_(j);
@@ -509,12 +507,12 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
   
   // calculate innovation covariance matrix S
   
-  R = MatrixXd(n_z_radar,n_z_radar);
+  MatrixXd R = MatrixXd(n_z_radar,n_z_radar);
   R<< std_radr_ * std_radr_,0,0,
       0,std_radphi_ * std_radphi_,0,
       0,0,std_radrd_ * std_radrd_;
   
-  S = MatrixXd(n_z_radar,n_z_radar);
+  MatrixXd S = MatrixXd(n_z_radar,n_z_radar);
   S.fill(0.0);      
   for (int k=0; k < 2 * n_aug_ + 1; ++k){
 
@@ -528,7 +526,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
   S = S + R;  
   
   
-  Tc = MatrixXd(n_x_, n_z_radar);
+  MatrixXd Tc = MatrixXd(n_x_, n_z_radar);
   Tc.fill(0);
   
   VectorXd diff_X;
