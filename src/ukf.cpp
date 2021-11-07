@@ -302,13 +302,13 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
     // Radar updates
 	std::cout << "Processing Radar Measurements " << std::endl;
 	std::cout << "Z Value " << std::endl<<z<<std::endl;
-	z=VectorXd(3);
+	VectorXd z=VectorXd(3);
 	z<< meas_pack.raw_measurements_[0],meas_pack.raw_measurements_[1],meas_pack.raw_measurements_[2];
 	
 	AugmentSigmaPoint();
     PredictSigmaPoint(dt);
     PredictMeanCovariance();
-    UpdateRadar(meas_pack);
+    UpdateRadar(z);
     //UKF_Update(n_z_radar);
 	
 	
@@ -317,13 +317,13 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
    } else if (use_laser_){
     // Laser updates
 	std::cout << "Processing Lidar Measurements " << std::endl;
-	z=VectorXd(2);
+	VectorXd z=VectorXd(2);
 	z<< meas_pack.raw_measurements_[0],meas_pack.raw_measurements_[1];
 	
 	AugmentSigmaPoint();
     PredictSigmaPoint(dt);
     PredictMeanCovariance();
-    UpdateLidar(meas_pack);
+    UpdateLidar(z);
     //UKF_Update(n_z_lidar);
 	
 	std::cout << "Z Value " << std::endl<<z<<std::endl;
@@ -371,7 +371,7 @@ void UKF::UKF_Update(int n_z){
 	
 }
 
-void UKF::UpdateLidar(MeasurementPackage meas_package) {
+void UKF::UpdateLidar(VectorXd z) {
   /**
    * TODO: Complete this function! Use lidar data to update the belief 
    * about the object's position. Modify the state vector, x_, and 
@@ -445,7 +445,7 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
 
 }
 
-void UKF::UpdateRadar(MeasurementPackage meas_package) {
+void UKF::UpdateRadar(VectorXd z) {
   /**
    * TODO: Complete this function! Use radar data to update the belief 
    * about the object's position. Modify the state vector, x_, and 

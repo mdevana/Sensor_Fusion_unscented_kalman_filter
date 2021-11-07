@@ -30,13 +30,13 @@ class UKF {
    * Updates the state and the state covariance matrix using a laser measurement
    * @param meas_package The measurement at k+1
    */
-  void UpdateLidar(MeasurementPackage meas_package);
+  void UpdateLidar(VectorXd);
 
   /**
    * Updates the state and the state covariance matrix using a radar measurement
    * @param meas_package The measurement at k+1
    */
-  void UpdateRadar(MeasurementPackage meas_package);
+  void UpdateRadar(VectorXd);
   
   void AugmentSigmaPoint();
   
@@ -133,7 +133,7 @@ class UKF {
   Eigen::MatrixXd Tc;
   Eigen::VectorXd z_pred;
   Eigen::MatrixXd Zsig;
-  Eigen::VectorXd z;
+  
   
   double WrapAngle(double);
 };
