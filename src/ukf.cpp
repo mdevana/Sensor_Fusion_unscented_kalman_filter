@@ -301,14 +301,13 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 	if ((meas_pack.sensor_type_ == MeasurementPackage::RADAR) && (use_radar_ == true)) {
     // Radar updates
 	std::cout << "Processing Radar Measurements " << std::endl;
-	std::cout << "Z Value " << std::endl<<z<<std::endl;
-	VectorXd z=VectorXd(3);
-	z<< meas_pack.raw_measurements_[0],meas_pack.raw_measurements_[1],meas_pack.raw_measurements_[2];
+	
+	
 	
 	AugmentSigmaPoint();
     PredictSigmaPoint(dt);
     PredictMeanCovariance();
-    UpdateRadar(z);
+    UpdateRadar(meas_pack);
     //UKF_Update(n_z_radar);
 	
 	
@@ -317,13 +316,12 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
    } else if (use_laser_){
     // Laser updates
 	std::cout << "Processing Lidar Measurements " << std::endl;
-	VectorXd z=VectorXd(2);
-	z<< meas_pack.raw_measurements_[0],meas_pack.raw_measurements_[1];
+	
 	
 	AugmentSigmaPoint();
     PredictSigmaPoint(dt);
     PredictMeanCovariance();
-    UpdateLidar(z);
+    UpdateLidar(meas_pack);
     //UKF_Update(n_z_lidar);
 	
 	std::cout << "Z Value " << std::endl<<z<<std::endl;
@@ -371,7 +369,7 @@ void UKF::UKF_Update(int n_z){
 	
 }
 
-void UKF::UpdateLidar(VectorXd z) {
+void UKF::UpdateLidar(MeasurementPackage meas_pack) {
   /**
    * TODO: Complete this function! Use lidar data to update the belief 
    * about the object's position. Modify the state vector, x_, and 
@@ -432,6 +430,9 @@ void UKF::UpdateLidar(VectorXd z) {
   VectorXd diff_z;
   
   Kgain = Tc * S.inverse();
+  
+  VectorXd z=VectorXd(2);
+  z<< meas_pack.raw_measurements_[0],meas_pack.raw_measurements_[1];
   diff_z = z - z_pred;
   
   x_ = x_ + Kgain * diff_z;
@@ -445,7 +446,7 @@ void UKF::UpdateLidar(VectorXd z) {
 
 }
 
-void UKF::UpdateRadar(VectorXd z) {
+void UKF::UpdateRadar(MeasurementPackage meas_pack) {
   /**
    * TODO: Complete this function! Use radar data to update the belief 
    * about the object's position. Modify the state vector, x_, and 
@@ -534,6 +535,10 @@ void UKF::UpdateRadar(VectorXd z) {
   VectorXd diff_z;
   
   Kgain = Tc * S.inverse();
+  
+  VectorXd z=VectorXd(3);
+  z<< meas_pack.raw_measurements_[0],meas_pack.raw_measurements_[1],meas_pack.raw_measurements_[2];
+  
   diff_z = z - z_pred;
   diff_z(1)=WrapAngle(diff_z(1));
   

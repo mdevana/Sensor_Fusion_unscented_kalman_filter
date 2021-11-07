@@ -30,13 +30,13 @@ class UKF {
    * Updates the state and the state covariance matrix using a laser measurement
    * @param meas_package The measurement at k+1
    */
-  void UpdateLidar(VectorXd);
+  void UpdateLidar(MeasurementPackage meas_package);
 
   /**
    * Updates the state and the state covariance matrix using a radar measurement
    * @param meas_package The measurement at k+1
    */
-  void UpdateRadar(VectorXd);
+  void UpdateRadar(MeasurementPackage meas_package);
   
   void AugmentSigmaPoint();
   
