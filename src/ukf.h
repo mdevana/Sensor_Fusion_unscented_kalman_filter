@@ -50,8 +50,6 @@ class UKF {
 
   void PredictMeanCovariance();
   
-  void UKF_Update(int);
-  
 
   void PrintData();
 
