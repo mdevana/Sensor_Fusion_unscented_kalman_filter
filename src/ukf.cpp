@@ -311,7 +311,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
     //UKF_Update(n_z_radar);
 	
 	
-	std::cout << "Z Value " << std::endl<<z<<std::endl;
+	
 
    } else if (use_laser_){
     // Laser updates
@@ -324,7 +324,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
     UpdateLidar(meas_pack);
     //UKF_Update(n_z_lidar);
 	
-	std::cout << "Z Value " << std::endl<<z<<std::endl;
+	
 	
 
    }
@@ -338,7 +338,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 
 void UKF::UKF_Update(int n_z){
 	
-  Tc = MatrixXd(n_x_, n_z);
+  /*Tc = MatrixXd(n_x_, n_z);
   Tc.fill(0);
   
   VectorXd diff_X;
@@ -365,7 +365,7 @@ void UKF::UKF_Update(int n_z){
   
   std::cout << "x_ = " << std::endl << x_ << std::endl;
   std::cout << "p_ = " << std::endl << P_ << std::endl;
-	
+  */	
 	
 }
 
