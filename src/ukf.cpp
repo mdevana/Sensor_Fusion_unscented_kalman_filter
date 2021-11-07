@@ -504,6 +504,8 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
 
       
       VectorXd diff = Zsig.col(k) - z_pred;
+	  diff(1)=WrapAngle(diff(1));
+	  
       S = S + diff * diff.transpose() * weights_(k);
 
   }
