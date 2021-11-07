@@ -60,7 +60,7 @@ UKF::UKF() {
    * Hint: one or more values initialized above might be wildly off...
    */
    
-    P_ << .05, 0, 0, 0, 0,
+    /*P_ << .05, 0, 0, 0, 0,
            0, .05, 0, 0, 0,
            0, 0, .6, 0, 0,
            0, 0, 0, 1.15, 0,
@@ -69,7 +69,7 @@ UKF::UKF() {
            0, 1, 0, 0, 0,
            0, 0, 1, 0, 0,
            0, 0, 0, 1, 0,
-           0, 0, 0, 0, 1;
+           0, 0, 0, 0, 1;*/
    
    n_x_ = 5;
    n_aug_ = 7;
@@ -270,7 +270,12 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 		    py, 
             0, 
             0,
-			0; 
+			0;
+	  P_<< std_radr_ * std_radr_,0,0,0,0,
+           0,std_radr_ * std_radr_,0,0,0,
+           0,0,std_radrd_ * std_radrd_,0,0,
+		   0,0,0,std_radphi_ * std_radphi_,0,
+		   0,0,0,0,std_radphi_ * std_radphi_;
 
     }
     else if (meas_pack.sensor_type_ == MeasurementPackage::LASER) {
@@ -280,6 +285,12 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
             0, 
             0,
 			0;
+
+	  P_<< std_laspx_ * std_laspx_,0,0,0,0,
+           0, std_laspy_  *  std_laspy_ ,0,0,0,
+           0,0,1,0,0,
+		   0,0,0,1,0,
+		   0,0,0,0,1;
 
     }
 	is_initialized_ = true;
