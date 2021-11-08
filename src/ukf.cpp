@@ -389,7 +389,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
     previous_timestamp_=meas_pack.timestamp_;
     std::cout << "Time Step : " <<dt<<std::endl;
 	
-	if (dt > 0.1 ){
+	while (dt > 0.1 ){
 		std::cout << "iterate multiple times " << std::endl;
 		AugmentSigmaPoint();
         PredictSigmaPoint(0.05);
