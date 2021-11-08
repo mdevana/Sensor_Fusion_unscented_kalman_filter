@@ -50,7 +50,7 @@ class UKF {
 
   void PredictMeanCovariance();
   
-  void UKF::init_test();
+  void init_test();
   void PrintData();
 
 
