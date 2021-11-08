@@ -113,6 +113,48 @@ void UKF::PrintData(){
 	
 }
 
+void UKF::init_test(){
+	
+	
+  std_a = 0.2;
+
+  // Process noise standard deviation yaw acceleration in rad/s^2
+  std_yawdd = 0.2;
+  
+  x <<   5.7441,
+         1.3800,
+         2.2049,
+         0.5015,
+         0.3528;
+
+  /*x <<
+     5.93637,
+     1.49035,
+     2.20528,
+    0.536853,
+    0.353577;*/
+	
+   P <<     0.0043,   -0.0013,    0.0030,   -0.0022,   -0.0020,
+          -0.0013,    0.0077,    0.0011,    0.0071,    0.0060,
+           0.0030,    0.0011,    0.0054,    0.0007,    0.0008,
+          -0.0022,    0.0071,    0.0007,    0.0098,    0.0100,
+          -0.0020,    0.0060,    0.0008,    0.0100,    0.0123;
+
+
+  /*P <<
+    0.0054342,  -0.002405,  0.0034157, -0.0034819, -0.00299378,
+    -0.002405,    0.01084,   0.001492,  0.0098018,  0.00791091,
+    0.0034157,   0.001492,  0.0058012, 0.00077863, 0.000792973,
+   -0.0034819,  0.0098018, 0.00077863,   0.011923,   0.0112491,
+   -0.0029937,  0.0079109, 0.00079297,   0.011249,   0.0126972;*/
+	  
+  z <<
+     5.9214,   // rho in m
+     0.2187,   // phi in rad
+     2.0062;   // rho_dot in m/s	  
+	
+}
+
 UKF::~UKF() {}
 
 void UKF::AugmentSigmaPoint(){
@@ -144,7 +186,7 @@ void UKF::AugmentSigmaPoint(){
       Xsig_aug.col(i+1)            = x_aug + sqrt(lambda_ + n_aug_) * A.col(i);
       Xsig_aug.col(i + 1 + n_aug_) = x_aug - sqrt(lambda_ + n_aug_) * A.col(i);
   }
-  
+  std::cout << "Augment Sigma point Xsig_aug = " << std::endl << Xsig_aug << std::endl;
 	
 }
 
@@ -308,6 +350,9 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
    float dt = (meas_pack.timestamp_-previous_timestamp_)/1000000.0;
    previous_timestamp_=meas_pack.timestamp_;
    std::cout << "Time Step : " <<dt<<std::endl;
+   
+   //test initialisation
+   init_test();
    
    while (dt> 0.1 ) {
 	   
@@ -542,7 +587,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
   
   NIS_radar_ = diff_z.transpose() * S.inverse() * diff_z;
   
-  std::cout << "x_ = " << std::endl << x_ << std::endl;
+  //std::cout << "x_ = " << std::endl << x_ << std::endl;
   //std::cout << "p_ = " << std::endl << P_ << std::endl;
 
 }
