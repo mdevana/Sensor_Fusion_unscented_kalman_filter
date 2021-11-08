@@ -541,7 +541,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
   
   NIS_radar_ = diff_z.transpose() * S.inverse() * diff_z;
   
-  //std::cout << "x_ = " << std::endl << x_ << std::endl;
-  std::cout << "p_ = " << std::endl << P_ << std::endl;
+  std::cout << "x_ = " << std::endl << x_ << std::endl;
+  //std::cout << "p_ = " << std::endl << P_ << std::endl;
 
 }
