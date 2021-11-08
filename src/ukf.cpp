@@ -353,6 +353,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
    
    //test initialisation
    init_test();
+   dt=0.05;
    
    while (dt> 0.1 ) {
 	   
