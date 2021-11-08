@@ -392,6 +392,9 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 	//AugmentSigmaPoint();
     //PredictSigmaPoint(dt);
     //PredictMeanCovariance();
+	meas_pack.raw_measurements_[0] = 5.9214;
+	meas_pack.raw_measurements_[1] = 0.2187;
+	meas_pack.raw_measurements_[2] = 2.0062;
     UpdateRadar(meas_pack);
     //UKF_Update(n_z_radar);
 	
@@ -610,7 +613,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
   std::cout << "R = " << std::endl << R << std::endl;
   std::cout << "S = " << std::endl << S << std::endl;
   
-  //std::cout << "x_ = " << std::endl << x_ << std::endl;
-  //std::cout << "p_ = " << std::endl << P_ << std::endl;
+  std::cout << "x_ = " << std::endl << x_ << std::endl;
+  std::cout << "p_ = " << std::endl << P_ << std::endl;
 
 }
