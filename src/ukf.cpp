@@ -391,6 +391,10 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 	
 	if (dt > 0.1 ){
 		std::cout << "iterate multiple times " << std::endl;
+		AugmentSigmaPoint();
+        PredictSigmaPoint(0.05);
+        PredictMeanCovariance();
+        dt-=0.05;
 		
 	}
 	
