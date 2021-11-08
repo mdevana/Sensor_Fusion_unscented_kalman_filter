@@ -365,8 +365,10 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
    std::cout << "Time Step : " <<dt<<std::endl;
    
    //test initialisation
-   init_test();
-   dt=0.1;
+   //init_test();
+   //dt=0.1;
+   
+   
    std::cout << "Time Step reinitialised: " <<dt<<std::endl;
    /*while (dt> 0.1 ) {
    	   std::cout << "into while loop" <<dt<<std::endl;
@@ -389,14 +391,12 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 	
 	
 	
-	//AugmentSigmaPoint();
-    //PredictSigmaPoint(dt);
-    //PredictMeanCovariance();
-	meas_pack.raw_measurements_[0] = 5.9214;
-	meas_pack.raw_measurements_[1] = 0.2187;
-	meas_pack.raw_measurements_[2] = 2.0062;
+
+	//meas_pack.raw_measurements_[0] = 5.9214;
+	//meas_pack.raw_measurements_[1] = 0.2187;
+	//meas_pack.raw_measurements_[2] = 2.0062;
     UpdateRadar(meas_pack);
-    //UKF_Update(n_z_radar);
+
 	
 	
 	
@@ -406,11 +406,9 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 	std::cout << "Processing Lidar Measurements " << std::endl;
 	
 	
-	//AugmentSigmaPoint();
-    //PredictSigmaPoint(dt);
-    //PredictMeanCovariance();
+
     UpdateLidar(meas_pack);
-    //UKF_Update(n_z_lidar);
+
 	
 	
 	
