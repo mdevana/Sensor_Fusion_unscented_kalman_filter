@@ -272,6 +272,9 @@ void UKF::PredictMeanCovariance(){
 
   }
   
+  std::cout << "x_ = " << std::endl << x_ << std::endl;
+  std::cout << "p_ = " << std::endl << P_ << std::endl;
+  
   
 }
 
