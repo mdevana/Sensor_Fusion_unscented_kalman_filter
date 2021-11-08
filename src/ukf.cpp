@@ -308,17 +308,21 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
    previous_timestamp_=meas_pack.timestamp_;
    std::cout << "Time Step : " <<dt<<std::endl;
    
+   AugmentSigmaPoint();
+   PredictSigmaPoint(dt);
+   PredictMeanCovariance();
+   
 	
 	
 	if ((meas_pack.sensor_type_ == MeasurementPackage::RADAR) && (use_radar_ == true)) {
     // Radar updates
 	std::cout << "Processing Radar Measurements " << std::endl;
-	std::cout << "Time current Time : " <<meas_pack.timestamp_<<std::endl;
 	
 	
-	AugmentSigmaPoint();
-    PredictSigmaPoint(dt);
-    PredictMeanCovariance();
+	
+	//AugmentSigmaPoint();
+    //PredictSigmaPoint(dt);
+    //PredictMeanCovariance();
     UpdateRadar(meas_pack);
     //UKF_Update(n_z_radar);
 	
