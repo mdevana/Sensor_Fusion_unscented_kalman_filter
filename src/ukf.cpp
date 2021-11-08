@@ -26,10 +26,10 @@ UKF::UKF() {
   P_ = MatrixXd(5, 5);
 
   // Process noise standard deviation longitudinal acceleration in m/s^2
-  std_a_ = 0.01;
+  std_a_ = 0.7;
 
   // Process noise standard deviation yaw acceleration in rad/s^2
-  std_yawdd_ = 0.01;
+  std_yawdd_ = 0.5;
   
   /**
    * DO NOT MODIFY measurement noise values below.
@@ -572,7 +572,10 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
 
       
       VectorXd diff = Zsig.col(k) - z_pred;
-	  diff(1)=WrapAngle(diff(1));
+	  //diff(1)=WrapAngle(diff(1));
+	  
+	  while (diff(1) > M_PI ) diff(1)-= 2.0 * M_PI;
+	  while (diff(1) < -1 * M_PI ) diff(1)+= 2.0 * M_PI;
 	  
       S = S + diff * diff.transpose() * weights_(k);
 
@@ -590,9 +593,14 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
       diff_X = Xsig_pred_.col(k) - x_;
       diff_Z = Zsig.col(k) - z_pred;
 	  
-	  diff_Z(1)=WrapAngle(diff_Z(1));
-	  diff_X(1)=WrapAngle(diff_X(1));
+	  //diff_Z(1)=WrapAngle(diff_Z(1));
+	  while (diff_Z(1) > M_PI ) diff_Z(1)-= 2.0 * M_PI;
+	  while (diff_Z(1) < -1 * M_PI ) diff_Z(1)+= 2.0 * M_PI;
 	  
+	  
+	  //diff_X(1)=WrapAngle(diff_X(1));
+	  while (diff_X(1) > M_PI ) diff_X(1)-= 2.0 * M_PI;
+	  while (diff_X(1) < -1 * M_PI ) diff_X(1)+= 2.0 * M_PI;
       
       Tc = Tc + weights_(k) * diff_X * diff_Z.transpose();
       
@@ -607,7 +615,10 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
   z<< meas_pack.raw_measurements_[0],meas_pack.raw_measurements_[1],meas_pack.raw_measurements_[2];
   
   diff_z = z - z_pred;
-  diff_z(1)=WrapAngle(diff_z(1));
+  
+  //diff_z(1)=WrapAngle(diff_z(1));
+  while (diff_z(1) > M_PI ) diff_z(1)-= 2.0 * M_PI;
+  while (diff_z(1) < -1 * M_PI ) diff_z(1)+= 2.0 * M_PI;
   
   x_ = x_ + Kgain * diff_z;
   P_ = P_ - Kgain * S * Kgain.transpose();
