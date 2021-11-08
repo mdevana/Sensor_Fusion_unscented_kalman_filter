@@ -326,11 +326,11 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
             0, 
             0,
 			0;
-	  /*P_<< std_radr_ * std_radr_,0,0,0,0,
+	  P_<< std_radr_ * std_radr_,0,0,0,0,
            0,std_radr_ * std_radr_,0,0,0,
            0,0,std_radrd_ * std_radrd_,0,0,
 		   0,0,0,std_radphi_ * std_radphi_,0,
-		   0,0,0,0,std_radphi_ * std_radphi_;*/
+		   0,0,0,0,std_radphi_ * std_radphi_;
 	is_initialized_ = true;
 
     }
