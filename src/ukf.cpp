@@ -194,7 +194,7 @@ void UKF::AugmentSigmaPoint(){
       Xsig_aug.col(i+1)            = x_aug + sqrt(lambda_ + n_aug_) * A.col(i);
       Xsig_aug.col(i + 1 + n_aug_) = x_aug - sqrt(lambda_ + n_aug_) * A.col(i);
   }
-  std::cout << "Augment Sigma point Xsig_aug = " << std::endl << Xsig_aug << std::endl;
+  //std::cout << "Augment Sigma point Xsig_aug = " << std::endl << Xsig_aug << std::endl;
 	
 }
 
@@ -251,7 +251,7 @@ void UKF::PredictSigmaPoint(double delta_t){
       
   }
 	
-	std::cout << "Xsig Prediction = " << std::endl << Xsig_pred_<< std::endl;
+	//std::cout << "Xsig Prediction = " << std::endl << Xsig_pred_<< std::endl;
 	
 }
 
@@ -280,8 +280,8 @@ void UKF::PredictMeanCovariance(){
 
   }
   
-  std::cout << "x_ = " << std::endl << x_ << std::endl;
-  std::cout << "p_ = " << std::endl << P_ << std::endl;
+  //std::cout << "x_ = " << std::endl << x_ << std::endl;
+  //std::cout << "p_ = " << std::endl << P_ << std::endl;
   
   
 }
