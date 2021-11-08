@@ -313,7 +313,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 	if ((meas_pack.sensor_type_ == MeasurementPackage::RADAR) && (use_radar_ == true)) {
     // Radar updates
 	std::cout << "Processing Radar Measurements " << std::endl;
-	
+	std::cout << "Time current Time : " <<meas_pack.timestamp_<<std::endl;
 	
 	
 	AugmentSigmaPoint();
