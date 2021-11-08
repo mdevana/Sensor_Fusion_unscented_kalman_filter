@@ -308,9 +308,18 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
    previous_timestamp_=meas_pack.timestamp_;
    std::cout << "Time Step : " <<dt<<std::endl;
    
+   while (dt> 0.1 ) {
+	   
+   AugmentSigmaPoint();
+   PredictSigmaPoint(0.05);
+   PredictMeanCovariance();
+   dt-=0.05
+	   
+   }
    AugmentSigmaPoint();
    PredictSigmaPoint(dt);
    PredictMeanCovariance();
+   
    
 	
 	
