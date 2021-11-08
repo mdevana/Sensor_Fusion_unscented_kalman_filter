@@ -389,6 +389,11 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
     previous_timestamp_=meas_pack.timestamp_;
     std::cout << "Time Step : " <<dt<<std::endl;
 	
+	if (dt > 0.1 ){
+		std::cout << "iterate multiple times " << std::endl;
+		
+	}
+	
 	AugmentSigmaPoint();
     PredictSigmaPoint(dt);
     PredictMeanCovariance();
@@ -609,11 +614,11 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
   
   NIS_radar_ = diff_z.transpose() * S.inverse() * diff_z;
   
-  std::cout << "z_pred = " << std::endl << z_pred << std::endl;
-  std::cout << "R = " << std::endl << R << std::endl;
-  std::cout << "S = " << std::endl << S << std::endl;
+  //std::cout << "z_pred = " << std::endl << z_pred << std::endl;
+  //std::cout << "R = " << std::endl << R << std::endl;
+  //std::cout << "S = " << std::endl << S << std::endl;
   
-  std::cout << "x_ = " << std::endl << x_ << std::endl;
-  std::cout << "p_ = " << std::endl << P_ << std::endl;
+  //std::cout << "x_ = " << std::endl << x_ << std::endl;
+  //std::cout << "p_ = " << std::endl << P_ << std::endl;
 
 }
