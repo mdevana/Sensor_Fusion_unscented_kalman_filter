@@ -116,10 +116,10 @@ void UKF::PrintData(){
 void UKF::init_test(){
 	
 	
-  std_a = 0.2;
+  std_a_ = 0.2;
 
   // Process noise standard deviation yaw acceleration in rad/s^2
-  std_yawdd = 0.2;
+  std_yawdd_ = 0.2;
   
   x <<   5.7441,
          1.3800,
