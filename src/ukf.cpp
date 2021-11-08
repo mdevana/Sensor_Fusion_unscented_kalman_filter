@@ -121,6 +121,14 @@ void UKF::init_test(){
   // Process noise standard deviation yaw acceleration in rad/s^2
   std_yawdd_ = 0.2;
   
+  std_radr_ = 0.3;
+
+  // Radar measurement noise standard deviation angle in rad
+  std_radphi_ = 0.0175;
+
+  // Radar measurement noise standard deviation radius change in m/s
+  std_radrd_ = 0.1;
+  
   x_ <<   5.7441,
          1.3800,
          2.2049,
@@ -485,6 +493,11 @@ void UKF::UpdateLidar(MeasurementPackage meas_pack) {
   
   NIS_lidar_ = diff_z.transpose() * S.inverse() * diff_z;
   
+  
+  //std::cout << "z_pred = " << std::endl << z_pred << std::endl;
+  //std::cout << "R = " << std::endl << R << std::endl;
+  //std::cout << "S = " << std::endl << S << std::endl;
+  
   //std::cout << "x_ = " << std::endl << x_ << std::endl;
   //std::cout << "p_ = " << std::endl << P_ << std::endl;
   
@@ -592,6 +605,10 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
   P_ = P_ - Kgain * S * Kgain.transpose();
   
   NIS_radar_ = diff_z.transpose() * S.inverse() * diff_z;
+  
+  std::cout << "z_pred = " << std::endl << z_pred << std::endl;
+  std::cout << "R = " << std::endl << R << std::endl;
+  std::cout << "S = " << std::endl << S << std::endl;
   
   //std::cout << "x_ = " << std::endl << x_ << std::endl;
   //std::cout << "p_ = " << std::endl << P_ << std::endl;
