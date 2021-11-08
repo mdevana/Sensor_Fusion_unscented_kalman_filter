@@ -192,7 +192,9 @@ void UKF::AugmentSigmaPoint(){
 
 
 void UKF::PredictSigmaPoint(double delta_t){
-	
+
+  std::cout << "Delta t used = " << std::endl <<delta_t << std::endl;	
+ 	
   Xsig_pred_.fill(0);
   double px,py,v,phi,phidot,std_a, std_yaw;
   double px_i, py_i,v_i, phi_i, phidot_i;
