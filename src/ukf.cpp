@@ -14,7 +14,7 @@ UKF::UKF() {
   is_initialized_ = false;
   
   // if this is false, laser measurements will be ignored (except during init)
-  use_laser_ = false;
+  use_laser_ = true;
 
   // if this is false, radar measurements will be ignored (except during init)
   use_radar_ = true;
@@ -334,9 +334,9 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 	std::cout << "Processing Lidar Measurements " << std::endl;
 	
 	
-	AugmentSigmaPoint();
-    PredictSigmaPoint(dt);
-    PredictMeanCovariance();
+	//AugmentSigmaPoint();
+    //PredictSigmaPoint(dt);
+    //PredictMeanCovariance();
     UpdateLidar(meas_pack);
     //UKF_Update(n_z_lidar);
 	
