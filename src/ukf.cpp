@@ -367,7 +367,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
    //dt=0.1;
    
    
-   std::cout << "Time Step reinitialised: " <<dt<<std::endl;
+   //std::cout << "Time Step reinitialised: " <<dt<<std::endl;
    /*while (dt> 0.1 ) {
    	   std::cout << "into while loop" <<dt<<std::endl;
    AugmentSigmaPoint();
