@@ -276,6 +276,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
            0,0,std_radrd_ * std_radrd_,0,0,
 		   0,0,0,std_radphi_ * std_radphi_,0,
 		   0,0,0,0,std_radphi_ * std_radphi_;*/
+	is_initialized_ = true;
 
     }
     else if (meas_pack.sensor_type_ == MeasurementPackage::LASER) {
@@ -291,9 +292,9 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
            0,0,1,0,0,
 		   0,0,0,1,0,
 		   0,0,0,0,1;*/
-
+    is_initialized_ = true; 
     }
-	is_initialized_ = true;
+	
 	previous_timestamp_=meas_pack.timestamp_;
 	//std::cout << "After initialisation X " << std::endl<<x_<<std::endl;
 	
