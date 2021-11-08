@@ -313,7 +313,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
    AugmentSigmaPoint();
    PredictSigmaPoint(0.05);
    PredictMeanCovariance();
-   dt-=0.05
+   dt-=0.05;
 	   
    }
    AugmentSigmaPoint();
