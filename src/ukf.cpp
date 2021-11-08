@@ -360,9 +360,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
    else {
     
    
-   float dt = (meas_pack.timestamp_-previous_timestamp_)/1000000.0;
-   previous_timestamp_=meas_pack.timestamp_;
-   std::cout << "Time Step : " <<dt<<std::endl;
+
    
    //test initialisation
    //init_test();
@@ -378,9 +376,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
    dt-=0.05;
 	   
    }*/
-   AugmentSigmaPoint();
-   PredictSigmaPoint(dt);
-   PredictMeanCovariance();
+
    
    
 	
@@ -389,7 +385,13 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
     // Radar updates
 	std::cout << "Processing Radar Measurements " << std::endl;
 	
+    float dt = (meas_pack.timestamp_-previous_timestamp_)/1000000.0;
+    previous_timestamp_=meas_pack.timestamp_;
+    std::cout << "Time Step : " <<dt<<std::endl;
 	
+	AugmentSigmaPoint();
+    PredictSigmaPoint(dt);
+    PredictMeanCovariance();
 	
 
 	//meas_pack.raw_measurements_[0] = 5.9214;
