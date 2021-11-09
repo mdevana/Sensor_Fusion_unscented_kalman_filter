@@ -376,14 +376,17 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
    
    
    //std::cout << "Time Step reinitialised: " <<dt<<std::endl;
-   /*while (dt> 0.1 ) {
+   
+   float dt = (meas_pack.timestamp_-previous_timestamp_)/1000000.0;
+    previous_timestamp_=meas_pack.timestamp_;
+   while (dt> 0.1 ) {
    	   std::cout << "into while loop" <<dt<<std::endl;
    AugmentSigmaPoint();
    PredictSigmaPoint(0.05);
    PredictMeanCovariance();
    dt-=0.05;
 	   
-   }*/
+   }
 
    
    
@@ -396,11 +399,11 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 	
 	
 	
-    float dt = (meas_pack.timestamp_-previous_timestamp_)/1000000.0;
-    previous_timestamp_=meas_pack.timestamp_;
+    
     //std::cout << "Time Step : " <<dt<<std::endl;
 	
-	while (dt > 0.1 ){
+	
+	/*while (dt > 0.1 ){
 		//std::cout << "iterate multiple times " << std::endl;
 		AugmentSigmaPoint();
         PredictSigmaPoint(0.05);
@@ -411,7 +414,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 	
 	AugmentSigmaPoint();
     PredictSigmaPoint(dt);
-    PredictMeanCovariance();
+    PredictMeanCovariance();*/
 	
 
 	//meas_pack.raw_measurements_[0] = 5.9214;
@@ -426,7 +429,10 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 
    } else if (use_laser_){
     // Laser updates
-	std::cout << "Processing Lidar Measurements " << std::endl;
+	
+	/*float dt = (meas_pack.timestamp_-previous_timestamp_)/1000000.0;
+    previous_timestamp_=meas_pack.timestamp_;
+	std::cout << "Processing Lidar Measurements " << std::endl;*/
 	
 	
 
