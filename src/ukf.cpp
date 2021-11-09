@@ -640,7 +640,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
   //std::cout << "R = " << std::endl << R << std::endl;
   //std::cout << "S = " << std::endl << S << std::endl;
   std::cout << "In update Radar" << std::endl;
-  std::cout << <<x_(0)<<" "<<x_(1)<<" "<< x_(3)<< std::endl;
+  std::cout <<x_(0)<<" "<<x_(1)<<" "<< x_(3)<< std::endl;
   //std::cout << "p_ = " << std::endl << P_ << std::endl;
 
 }
