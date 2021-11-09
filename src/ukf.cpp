@@ -315,6 +315,8 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 	  float theta_mea=meas_pack.raw_measurements_[1];
 	  float rhodot_mea=meas_pack.raw_measurements_[2];
 	  
+	  std::cout << "Theta value = " <<theta_mea<< std::endl<<theta_mea * 180 / M_PI <<std::endl;
+	  
 	  float px = rho_mea * cos(theta_mea);
 	  float py = rho_mea * sin(theta_mea);
 	  float vx = rhodot_mea * cos( theta_mea);
