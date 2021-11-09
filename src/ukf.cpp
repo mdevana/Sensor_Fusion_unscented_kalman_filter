@@ -412,7 +412,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 	//meas_pack.raw_measurements_[0] = 5.9214;
 	//meas_pack.raw_measurements_[1] = 0.2187;
 	//meas_pack.raw_measurements_[2] = 2.0062;
-	std::cout << "Processing Radar Measurements " << std::endl;
+	
     UpdateRadar(meas_pack);
 
 	
@@ -639,7 +639,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
   //std::cout << "z_pred = " << std::endl << z_pred << std::endl;
   //std::cout << "R = " << std::endl << R << std::endl;
   //std::cout << "S = " << std::endl << S << std::endl;
-  std::cout << "In update Radar" << std::endl;
+  
   std::cout <<x_(0)<<" "<<x_(1)<<" "<< x_(3)<< std::endl;
   //std::cout << "p_ = " << std::endl << P_ << std::endl;
 
