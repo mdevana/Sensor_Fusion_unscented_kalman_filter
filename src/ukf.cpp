@@ -385,7 +385,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 	
 	if ((meas_pack.sensor_type_ == MeasurementPackage::RADAR) && (use_radar_ == true)) {
     // Radar updates
-	std::cout << "Processing Radar Measurements " << std::endl;
+	//std::cout << "Processing Radar Measurements " << std::endl;
 	float theta_mea=meas_pack.raw_measurements_[1];
 	std::cout << "Theta value = " <<theta_mea<< std::endl<<theta_mea * 180 / M_PI <<std::endl;
 	
@@ -393,7 +393,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 	
     float dt = (meas_pack.timestamp_-previous_timestamp_)/1000000.0;
     previous_timestamp_=meas_pack.timestamp_;
-    std::cout << "Time Step : " <<dt<<std::endl;
+    //std::cout << "Time Step : " <<dt<<std::endl;
 	
 	while (dt > 0.1 ){
 		//std::cout << "iterate multiple times " << std::endl;
