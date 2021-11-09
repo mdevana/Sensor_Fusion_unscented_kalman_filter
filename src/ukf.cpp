@@ -615,8 +615,8 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
 	  
 	  
 	  //diff_X(1)=WrapAngle(diff_X(1));
-	  while (diff_X(1) > M_PI ) diff_X(1)-= 2.0 * M_PI;
-	  while (diff_X(1) < -1 * M_PI ) diff_X(1)+= 2.0 * M_PI;
+	  while (diff_X(3) > M_PI ) diff_X(1)-= 2.0 * M_PI;
+	  while (diff_X(3) < -1 * M_PI ) diff_X(1)+= 2.0 * M_PI;
       
       Tc = Tc + weights_(k) * diff_X * diff_Z.transpose();
       
