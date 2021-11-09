@@ -201,7 +201,7 @@ void UKF::AugmentSigmaPoint(){
 
 void UKF::PredictSigmaPoint(double delta_t){
 
-  std::cout << "Delta t used = " << std::endl <<delta_t << std::endl;	
+  //std::cout << "Delta t used = " << std::endl <<delta_t << std::endl;	
  	
   Xsig_pred_.fill(0);
   double px,py,v,phi,phidot,std_a, std_yaw;
@@ -396,7 +396,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
     std::cout << "Time Step : " <<dt<<std::endl;
 	
 	while (dt > 0.1 ){
-		std::cout << "iterate multiple times " << std::endl;
+		//std::cout << "iterate multiple times " << std::endl;
 		AugmentSigmaPoint();
         PredictSigmaPoint(0.05);
         PredictMeanCovariance();
