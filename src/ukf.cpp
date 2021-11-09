@@ -387,7 +387,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
     // Radar updates
 	//std::cout << "Processing Radar Measurements " << std::endl;
 	float theta_mea=meas_pack.raw_measurements_[1];
-	std::cout << "Theta value = " <<theta_mea<< std::endl<<theta_mea * 180 / M_PI <<std::endl;
+	std::cout << "Theta value = " <<theta_mea * 180 / M_PI <<std::endl;
 	
 	
 	
@@ -639,7 +639,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
   //std::cout << "R = " << std::endl << R << std::endl;
   //std::cout << "S = " << std::endl << S << std::endl;
   
-  //std::cout << "x_ = " << std::endl << x_ << std::endl;
+  std::cout << <<x_(0)<<" "<<x_(1)<<" "<< x_(3)<< std::endl;
   //std::cout << "p_ = " << std::endl << P_ << std::endl;
 
 }
