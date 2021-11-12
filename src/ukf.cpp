@@ -561,7 +561,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
       
       
       rho = sqrt(x_px * x_px + x_py * x_py );
-      phi = atan2(x_py/x_px);
+      phi = atan2(x_py,x_px);
 	  if (rho < 0.001)
 			rho_dot = (x_px * cos(x_phi) * x_vel + x_py * sin(x_phi) * x_vel) / 0.001;
       else		  
