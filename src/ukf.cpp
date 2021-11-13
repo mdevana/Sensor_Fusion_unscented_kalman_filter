@@ -444,6 +444,8 @@ void UKF::UpdateLidar(MeasurementPackage meas_pack) {
   }
   S = S + R;  
   
+  // calculate Cross-Correlation matrix TC
+  
   MatrixXd Tc = MatrixXd(n_x_, n_z_lidar);
   Tc.fill(0);
   
@@ -476,15 +478,12 @@ void UKF::UpdateLidar(MeasurementPackage meas_pack) {
 
 void UKF::UpdateRadar(MeasurementPackage meas_pack) {
   /**
-   * TODO: Complete this function! Use radar data to update the belief 
+   * Use radar data to update the belief 
    * about the object's position. Modify the state vector, x_, and 
    * covariance, P_.
    * You can also calculate the radar NIS, if desired.
    */
-   
 
-
-   
   // transform sigma points into measurement space
   double rho,phi,rho_dot;
   double x_px, x_py, x_vel, x_phi, x_phi_dot;
@@ -538,14 +537,13 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
       VectorXd diff = Zsig.col(k) - z_pred;
 	  diff(1)=WrapAngle(diff(1));
 	  
-	  //while (diff(1) > M_PI ) diff(1)-= 2.0 * M_PI;
-	  //while (diff(1) < -1 * M_PI ) diff(1)+= 2.0 * M_PI;
-	  
+  
       S = S + diff * diff.transpose() * weights_(k);
 
   }
   S = S + R;  
   
+  // calculate Cross-Correlation matrix TC
   
   MatrixXd Tc = MatrixXd(n_x_, n_z_radar);
   Tc.fill(0);
@@ -558,13 +556,8 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
       diff_Z = Zsig.col(k) - z_pred;
 	  
 	  diff_Z(1)=WrapAngle(diff_Z(1));
-	  //while (diff_Z(1) > M_PI ) diff_Z(1)-= 2.0 * M_PI;
-	  //while (diff_Z(1) < -1 * M_PI ) diff_Z(1)+= 2.0 * M_PI;
-	  
 	  
 	  diff_X(3)=WrapAngle(diff_X(3));
-	  //while (diff_X(3) > M_PI ) diff_X(3)-= 2.0 * M_PI;
-	  //while (diff_X(3) < -1 * M_PI ) diff_X(3)+= 2.0 * M_PI;
       
       Tc = Tc + weights_(k) * diff_X * diff_Z.transpose();
       
@@ -578,14 +571,8 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
   VectorXd z=VectorXd(3);
   z<< meas_pack.raw_measurements_[0],meas_pack.raw_measurements_[1],meas_pack.raw_measurements_[2];
   
-  float theta_mea=meas_pack.raw_measurements_[1];
-  
-  
-  diff_z = z - z_pred;
-  
+  diff_z = z - z_pred;  
   diff_z(1)=WrapAngle(diff_z(1));
-  //while (diff_z(1) > M_PI ) diff_z(1)-= 2.0 * M_PI;
-  //while (diff_z(1) < -1 * M_PI ) diff_z(1)+= 2.0 * M_PI;
   
   x_ = x_ + Kgain * diff_z;
   P_ = P_ - Kgain * S * Kgain.transpose();
