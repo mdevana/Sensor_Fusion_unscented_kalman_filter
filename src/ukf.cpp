@@ -60,23 +60,6 @@ UKF::UKF() {
    * Hint: one or more values initialized above might be wildly off...
    */
    
-    /*P_ << .05, 0, 0, 0, 0,
-           0, .05, 0, 0, 0,
-           0, 0, .6, 0, 0,
-           0, 0, 0, 1.15, 0,
-           0, 0, 0, 0, .15;
-    P_ <<  1, 0, 0, 0, 0,
-           0, 1, 0, 0, 0,
-           0, 0, 1, 0, 0,
-           0, 0, 0, 1, 0,
-           0, 0, 0, 0, 1;*/
-	//P_.fill(0);
-	/*P_<< std_radr_ * std_radr_,0,0,0,0,
-           0,std_radr_ * std_radr_,0,0,0,
-           0,0,std_radrd_ * std_radrd_,0,0,
-		   0,0,0,std_radphi_ * std_radphi_,0,
-		   0,0,0,0,std_radphi_ * std_radphi_;*/
-   
    n_x_ = 5;
    n_aug_ = 7;
    n_z_radar = 3;
@@ -141,8 +124,6 @@ void UKF::AugmentSigmaPoint(){
 
 void UKF::PredictSigmaPoint(double delta_t){
 
-  
- 	
   Xsig_pred_.fill(0);
   double px,py,v,phi,phidot,std_a, std_yaw;
   double px_i, py_i,v_i, phi_i, phidot_i;
@@ -186,9 +167,7 @@ void UKF::PredictSigmaPoint(double delta_t){
       Xsig_pred_(2,i) = v_i;
       Xsig_pred_(3,i) = phi_i;
       Xsig_pred_(4,i) = phidot_i;
-      
-      
-      
+
   }
 	
 	
@@ -312,11 +291,6 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
    AugmentSigmaPoint();
    PredictSigmaPoint(dt);
    PredictMeanCovariance();
-   
-
-   
-   
-	
 	
 	if ((meas_pack.sensor_type_ == MeasurementPackage::RADAR) && (use_radar_ == true)) {
     // Radar updates
