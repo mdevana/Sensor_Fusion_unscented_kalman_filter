@@ -71,11 +71,11 @@ UKF::UKF() {
            0, 0, 0, 1, 0,
            0, 0, 0, 0, 1;*/
 	//P_.fill(0);
-	P_<< std_radr_ * std_radr_,0,0,0,0,
+	/*P_<< std_radr_ * std_radr_,0,0,0,0,
            0,std_radr_ * std_radr_,0,0,0,
            0,0,std_radrd_ * std_radrd_,0,0,
 		   0,0,0,std_radphi_ * std_radphi_,0,
-		   0,0,0,0,std_radphi_ * std_radphi_;
+		   0,0,0,0,std_radphi_ * std_radphi_;*/
    
    n_x_ = 5;
    n_aug_ = 7;
@@ -112,8 +112,8 @@ void UKF::PrintData(){
 	//std::cout << "x_ = " << std::endl << x_<< std::endl;
 	//std::cout << "p_ = " << std::endl << P_<< std::endl;
 	
-	std::cout << "x_aug = " << std::endl << x_aug << std::endl;
-	std::cout << "p_aug = " << std::endl << P_aug << std::endl;
+	//std::cout << "x_aug = " << std::endl << x_aug << std::endl;
+	//std::cout << "p_aug = " << std::endl << P_aug << std::endl;
 	//std::cout << "Xsig_aug = " << std::endl << Xsig_aug << std::endl;
 	
 	
@@ -193,21 +193,21 @@ void UKF::AugmentSigmaPoint(){
   // create augmented sigma points
   
   Xsig_aug.col(0) = x_aug;
-  //std::cout << "P_aug = " << std::endl << P_aug << std::endl;
+  
   
   for(int i=0;i < n_aug_;i++){
       
       Xsig_aug.col(i+1)            = x_aug + sqrt(lambda_ + n_aug_) * A.col(i);
       Xsig_aug.col(i + 1 + n_aug_) = x_aug - sqrt(lambda_ + n_aug_) * A.col(i);
   }
-  //std::cout << "Augment Sigma point Xsig_aug = " << std::endl << Xsig_aug << std::endl;
+  
 	
 }
 
 
 void UKF::PredictSigmaPoint(double delta_t){
 
-  //std::cout << "Delta t used = " << std::endl <<delta_t << std::endl;	
+  
  	
   Xsig_pred_.fill(0);
   double px,py,v,phi,phidot,std_a, std_yaw;
@@ -257,7 +257,7 @@ void UKF::PredictSigmaPoint(double delta_t){
       
   }
 	
-	std::cout << "Xsig Prediction = " << std::endl << Xsig_pred_<< std::endl;
+	
 	
 }
 
@@ -285,10 +285,7 @@ void UKF::PredictMeanCovariance(){
     P_ = P_ + weights_(i) * term1 * term1.transpose();
 
   }
-  
-  //std::cout << "x_ = " << std::endl << x_ << std::endl;
-  //std::cout << "p_ = " << std::endl << P_ << std::endl;
-  
+
   
 }
 
@@ -350,35 +347,25 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
             0,
 			0;
 
-	  /*P_<< std_laspx_ * std_laspx_,0,0,0,0,
+	  P_<< std_laspx_ * std_laspx_,0,0,0,0,
            0, std_laspy_  *  std_laspy_ ,0,0,0,
            0,0,1,0,0,
 		   0,0,0,1,0,
-		   0,0,0,0,1;*/
+		   0,0,0,0,1;
     is_initialized_ = true; 
     }
 	
 	previous_timestamp_=meas_pack.timestamp_;
-	//std::cout << "After initialisation X " << std::endl<<x_<<std::endl;
+	
 	
    }
    
    
    // Stage after initialisation
    else {
-    
-   
 
-   
-   //test initialisation
-   //init_test();
-   //dt=0.1;
-   
-   
-   //std::cout << "Time Step reinitialised: " <<dt<<std::endl;
-   
    float dt = (meas_pack.timestamp_-previous_timestamp_)/1000000.0;
-    previous_timestamp_=meas_pack.timestamp_;
+   previous_timestamp_=meas_pack.timestamp_;
    while (dt> 0.1 ) {
    	   std::cout << "into while loop" <<dt<<std::endl;
    AugmentSigmaPoint();
@@ -399,53 +386,10 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 	
 	if ((meas_pack.sensor_type_ == MeasurementPackage::RADAR) && (use_radar_ == true)) {
     // Radar updates
-	//std::cout << "Processing Radar Measurements " << std::endl;
-	
-	
-	
-	
-    
-    //std::cout << "Time Step : " <<dt<<std::endl;
-	
-	
-	/*while (dt > 0.1 ){
-		//std::cout << "iterate multiple times " << std::endl;
-		AugmentSigmaPoint();
-        PredictSigmaPoint(0.05);
-        PredictMeanCovariance();
-        dt-=0.05;
-		
-	}
-	
-	AugmentSigmaPoint();
-    PredictSigmaPoint(dt);
-    PredictMeanCovariance();*/
-	
-
-	//meas_pack.raw_measurements_[0] = 5.9214;
-	//meas_pack.raw_measurements_[1] = 0.2187;
-	//meas_pack.raw_measurements_[2] = 2.0062;
-	
-    UpdateRadar(meas_pack);
-
-	
-	
-	
-
+		UpdateRadar(meas_pack);
    } else if (use_laser_){
-    // Laser updates
-	
-	/*float dt = (meas_pack.timestamp_-previous_timestamp_)/1000000.0;
-    previous_timestamp_=meas_pack.timestamp_;
-	std::cout << "Processing Lidar Measurements " << std::endl;*/
-	
-	
 
     UpdateLidar(meas_pack);
-
-	
-	
-	
 
    }
 
@@ -527,15 +471,6 @@ void UKF::UpdateLidar(MeasurementPackage meas_pack) {
   P_ = P_ - Kgain * S * Kgain.transpose();
   
   NIS_lidar_ = diff_z.transpose() * S.inverse() * diff_z;
-  
-  
-  //std::cout << "z_pred = " << std::endl << z_pred << std::endl;
-  //std::cout << "R = " << std::endl << R << std::endl;
-  //std::cout << "S = " << std::endl << S << std::endl;
-  
-  //std::cout << "x_ = " << std::endl << x_ << std::endl;
-  //std::cout << "p_ = " << std::endl << P_ << std::endl;
-  
 
 }
 
@@ -658,11 +593,9 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
   
   NIS_radar_ = diff_z.transpose() * S.inverse() * diff_z;
   
-  //std::cout << "z_pred = " << std::endl << z_pred << std::endl;
-  //std::cout << "R = " << std::endl << R << std::endl;
-  //std::cout << "S = " << std::endl << S << std::endl;
+
   
-  std::cout<<x_(0)<<" "<<x_(1)<<" "<< x_(3)<< std::endl;
+  //std::cout<<x_(0)<<" "<<x_(1)<<" "<< x_(3)<< std::endl;
   //std::cout << "p_ = " << std::endl << P_ << std::endl;
 
 }
