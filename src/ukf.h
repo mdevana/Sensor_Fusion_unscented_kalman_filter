@@ -49,10 +49,6 @@ class UKF {
   void PredictSigmaPoint(double);
 
   void PredictMeanCovariance();
-  
-  void init_test();
-  void PrintData();
-
 
   // initially set to false, set to true in first call of ProcessMeasurement
   bool is_initialized_;
