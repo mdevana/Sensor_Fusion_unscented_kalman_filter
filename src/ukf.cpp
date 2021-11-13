@@ -580,7 +580,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
   z<< meas_pack.raw_measurements_[0],meas_pack.raw_measurements_[1],meas_pack.raw_measurements_[2];
   
   float theta_mea=meas_pack.raw_measurements_[1];
-  std::cout << "Theta value = " <<theta_mea * 180 / M_PI <<" ";
+  
   
   diff_z = z - z_pred;
   
@@ -594,7 +594,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
   NIS_radar_ = diff_z.transpose() * S.inverse() * diff_z;
   
 
-  
+  //std::cout << "Theta value = " <<theta_mea * 180 / M_PI <<" ";
   //std::cout<<x_(0)<<" "<<x_(1)<<" "<< x_(3)<< std::endl;
   //std::cout << "p_ = " << std::endl << P_ << std::endl;
 
