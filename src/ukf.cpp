@@ -514,8 +514,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
       
   }
   
-  std::cout << "Zsig value = " <<Zsig <<std::endl;
-   
+
   // calculate mean predicted measurement
   VectorXd z_pred = VectorXd(n_z_radar);
   z_pred.fill(0.0);
@@ -537,10 +536,10 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
 
       
       VectorXd diff = Zsig.col(k) - z_pred;
-	  //diff(1)=WrapAngle(diff(1));
+	  diff(1)=WrapAngle(diff(1));
 	  
-	  while (diff(1) > M_PI ) diff(1)-= 2.0 * M_PI;
-	  while (diff(1) < -1 * M_PI ) diff(1)+= 2.0 * M_PI;
+	  //while (diff(1) > M_PI ) diff(1)-= 2.0 * M_PI;
+	  //while (diff(1) < -1 * M_PI ) diff(1)+= 2.0 * M_PI;
 	  
       S = S + diff * diff.transpose() * weights_(k);
 
@@ -558,14 +557,14 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
       diff_X = Xsig_pred_.col(k) - x_;
       diff_Z = Zsig.col(k) - z_pred;
 	  
-	  //diff_Z(1)=WrapAngle(diff_Z(1));
-	  while (diff_Z(1) > M_PI ) diff_Z(1)-= 2.0 * M_PI;
-	  while (diff_Z(1) < -1 * M_PI ) diff_Z(1)+= 2.0 * M_PI;
+	  diff_Z(1)=WrapAngle(diff_Z(1));
+	  //while (diff_Z(1) > M_PI ) diff_Z(1)-= 2.0 * M_PI;
+	  //while (diff_Z(1) < -1 * M_PI ) diff_Z(1)+= 2.0 * M_PI;
 	  
 	  
-	  //diff_X(1)=WrapAngle(diff_X(1));
-	  while (diff_X(3) > M_PI ) diff_X(1)-= 2.0 * M_PI;
-	  while (diff_X(3) < -1 * M_PI ) diff_X(1)+= 2.0 * M_PI;
+	  diff_X(3)=WrapAngle(diff_X(3));
+	  //while (diff_X(3) > M_PI ) diff_X(3)-= 2.0 * M_PI;
+	  //while (diff_X(3) < -1 * M_PI ) diff_X(3)+= 2.0 * M_PI;
       
       Tc = Tc + weights_(k) * diff_X * diff_Z.transpose();
       
@@ -584,9 +583,9 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
   
   diff_z = z - z_pred;
   
-  //diff_z(1)=WrapAngle(diff_z(1));
-  while (diff_z(1) > M_PI ) diff_z(1)-= 2.0 * M_PI;
-  while (diff_z(1) < -1 * M_PI ) diff_z(1)+= 2.0 * M_PI;
+  diff_z(1)=WrapAngle(diff_z(1));
+  //while (diff_z(1) > M_PI ) diff_z(1)-= 2.0 * M_PI;
+  //while (diff_z(1) < -1 * M_PI ) diff_z(1)+= 2.0 * M_PI;
   
   x_ = x_ + Kgain * diff_z;
   P_ = P_ - Kgain * S * Kgain.transpose();
