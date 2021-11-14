@@ -112,7 +112,8 @@ int main() {
           // Call ProcessMeasurement(meas_package) for Kalman filter
 		  float dt = (meas_package.timestamp_- prev_timestamp)/1000000.0;
 		  std::cout << "Time Stamp :"<<dt<<std::endl;
-          ukf.ProcessMeasurement(meas_package);       
+          ukf.ProcessMeasurement(meas_package);
+          prev_timestamp = meas_package.timestamp_;		  
 
           // Push the current estimated x,y positon from the Kalman filter's 
           //   state vector
