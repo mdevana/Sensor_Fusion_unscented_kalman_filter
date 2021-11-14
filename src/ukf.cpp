@@ -17,7 +17,7 @@ UKF::UKF() {
   use_laser_ = true;
 
   // if this is false, radar measurements will be ignored (except during init)
-  use_radar_ = true;
+  use_radar_ = false;
 
   // initial state vector
   x_ = VectorXd(5);
@@ -383,7 +383,7 @@ void UKF::UpdateLidar(MeasurementPackage meas_pack) {
   
   Kgain = Tc * S.inverse();
   
-  VectorXd z=VectorXd(2);
+  VectorXd z=VectorXd(n_z_lidar);
   z<< meas_pack.raw_measurements_[0],meas_pack.raw_measurements_[1];
   diff_z = z - z_pred;
   
