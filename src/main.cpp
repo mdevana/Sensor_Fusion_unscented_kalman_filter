@@ -111,7 +111,7 @@ int main() {
           
           // Call ProcessMeasurement(meas_package) for Kalman filter
 		  float dt = (meas_package.timestamp_- prev_timestamp)/1000000.0;
-		  std::cout << "Time Stamp :"<<dt<<std::endl;
+		  std::cout << "Time Stamp :"<<meas_package.timestamp<<std::endl;
           ukf.ProcessMeasurement(meas_package);
 		  
 		  ukf.Prediction(dt);
