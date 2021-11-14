@@ -110,12 +110,13 @@ int main() {
           ground_truth.push_back(gt_values);
           
           // Call ProcessMeasurement(meas_package) for Kalman filter
-		  float dt;
+		  float dt=0.0;
 		  if (prev_timestamp<0)
 			  prev_timestamp = timestamp;
 		  else
 		  dt = (meas_package.timestamp_- prev_timestamp)/1000000.0;
-		  std::cout << "Time Stamp :"<<meas_package.timestamp_<<std::endl;
+		  std::cout << "delta t :"<<dt<<std::endl;
+		  
           ukf.ProcessMeasurement(meas_package);
 		  
 		  //ukf.Prediction(dt);
