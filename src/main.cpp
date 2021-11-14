@@ -114,7 +114,7 @@ int main() {
 		  std::cout << "Time Stamp :"<<meas_package.timestamp_<<std::endl;
           ukf.ProcessMeasurement(meas_package);
 		  
-		  ukf.Prediction(dt);
+		  //ukf.Prediction(dt);
           prev_timestamp = meas_package.timestamp_;		  
 
           // Push the current estimated x,y positon from the Kalman filter's 
