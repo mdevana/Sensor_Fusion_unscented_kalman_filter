@@ -110,7 +110,7 @@ int main() {
           ground_truth.push_back(gt_values);
           
           // Call ProcessMeasurement(meas_package) for Kalman filter
-		  float dt = (meas_pack.timestamp_-previous_timestamp)/1000000.0;
+		  float dt = (meas_pack.timestamp_-prev_timestamp)/1000000.0;
 		  std::cout << "Time Stamp :"<<dt<<std::endl;
           ukf.ProcessMeasurement(meas_package);       
 
