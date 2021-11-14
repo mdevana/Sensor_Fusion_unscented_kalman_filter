@@ -117,7 +117,7 @@ int main() {
 		  else
 			  dt = (meas_package.timestamp_- prev_timestamp)/1000000.0;
 	  
-		  std::cout << "delta t :"<<dt<<std::endl;
+		  //std::cout << "delta t :"<<dt<<std::endl;
 		  
           ukf.ProcessMeasurement(meas_package);
 		  

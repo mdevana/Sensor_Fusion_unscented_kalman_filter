@@ -17,7 +17,7 @@ UKF::UKF() {
   use_laser_ = true;
 
   // if this is false, radar measurements will be ignored (except during init)
-  use_radar_ = false;
+  use_radar_ = true;
 
   // initial state vector
   x_ = VectorXd(5);
@@ -295,9 +295,9 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
    // Stage after initialisation
    else {
 
-   float dt = (meas_pack.timestamp_-previous_timestamp_)/1000000.0;
-   std::cout << "Time Stamp calculated inside :"<<dt<<std::endl;
-   previous_timestamp_=meas_pack.timestamp_;
+   //float dt = (meas_pack.timestamp_-previous_timestamp_)/1000000.0;
+   //std::cout << "Time Stamp calculated inside :"<<dt<<std::endl;
+   //previous_timestamp_=meas_pack.timestamp_;
    
    //Prediction(dt);
    
