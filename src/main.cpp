@@ -42,7 +42,7 @@ int main() {
   vector<VectorXd> estimations;
   vector<VectorXd> ground_truth;
 
-  h.onMessage([&ukf,&tools,&estimations,&ground_truth]
+  h.onMessage([&ukf,&tools,&estimations,&ground_truth,&prev_timestamp]
               (uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, 
                uWS::OpCode opCode) {
     // "42" at the start of the message means there's a websocket message event.
@@ -110,7 +110,7 @@ int main() {
           ground_truth.push_back(gt_values);
           
           // Call ProcessMeasurement(meas_package) for Kalman filter
-		  float dt = (meas_package.timestamp_-prev_timestamp)/1000000.0;
+		  float dt = (meas_package.timestamp_- prev_timestamp)/1000000.0;
 		  std::cout << "Time Stamp :"<<dt<<std::endl;
           ukf.ProcessMeasurement(meas_package);       
 
