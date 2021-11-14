@@ -296,6 +296,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
    else {
 
    float dt = (meas_pack.timestamp_-previous_timestamp_)/1000000.0;
+   std::cout << "Time Stamp calculated inside :"<<dt<<std::endl;
    previous_timestamp_=meas_pack.timestamp_;
    
 	
