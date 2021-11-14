@@ -90,6 +90,15 @@ UKF::~UKF() {}
 
 void UKF::Prediction(double dt){
 	
+   while (dt> 0.1 ) {
+   	   std::cout << "into while loop" <<dt<<std::endl;
+	   AugmentSigmaPoint();
+       PredictSigmaPoint(0.05);
+       PredictMeanCovariance();
+       dt-=0.05;
+	   
+   }
+   
    AugmentSigmaPoint();
    PredictSigmaPoint(dt);
    PredictMeanCovariance();
@@ -288,18 +297,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 
    float dt = (meas_pack.timestamp_-previous_timestamp_)/1000000.0;
    previous_timestamp_=meas_pack.timestamp_;
-   while (dt> 0.1 ) {
-   	   std::cout << "into while loop" <<dt<<std::endl;
-   AugmentSigmaPoint();
-   PredictSigmaPoint(0.05);
-   PredictMeanCovariance();
-   dt-=0.05;
-	   
-   }
    
-   AugmentSigmaPoint();
-   PredictSigmaPoint(dt);
-   PredictMeanCovariance();
 	
 	if ((meas_pack.sensor_type_ == MeasurementPackage::RADAR) && (use_radar_ == true)) {
     // Radar updates

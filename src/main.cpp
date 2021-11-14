@@ -113,6 +113,8 @@ int main() {
 		  float dt = (meas_package.timestamp_- prev_timestamp)/1000000.0;
 		  std::cout << "Time Stamp :"<<dt<<std::endl;
           ukf.ProcessMeasurement(meas_package);
+		  
+		  ukf.Prediction(dt);
           prev_timestamp = meas_package.timestamp_;		  
 
           // Push the current estimated x,y positon from the Kalman filter's 
