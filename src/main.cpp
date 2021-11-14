@@ -35,14 +35,7 @@ int main() {
   // Create a Kalman Filter instance
   MeasurementPackage meas_package;
   UKF ukf;
-  //ukf.UKF_test_initialise();
-  
-  //ukf.AugmentSigmaPoint();
-  //ukf.PredictSigmaPoint(0.1);
-  //ukf.PredictMeanCovariance();
-  //ukf.UpdateRadar(meas_package);
-  //ukf.UKF_Update(1);
-  //ukf.PrintData();
+  double prev_timestamp=0.0;
 
   // used to compute the RMSE later
   Tools tools;
@@ -117,6 +110,8 @@ int main() {
           ground_truth.push_back(gt_values);
           
           // Call ProcessMeasurement(meas_package) for Kalman filter
+		  float dt = (meas_pack.timestamp_-previous_timestamp_)/1000000.0;
+		  std::cout << "Time Stamp :"<<dt<<std::endl;
           ukf.ProcessMeasurement(meas_package);       
 
           // Push the current estimated x,y positon from the Kalman filter's 
