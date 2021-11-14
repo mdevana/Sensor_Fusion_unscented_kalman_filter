@@ -17,7 +17,7 @@ UKF::UKF() {
   use_laser_ = true;
 
   // if this is false, radar measurements will be ignored (except during init)
-  use_radar_ = true;
+  use_radar_ = false;
 
   // initial state vector
   x_ = VectorXd(5);
@@ -87,6 +87,15 @@ UKF::UKF() {
 }
 
 UKF::~UKF() {}
+
+void UKF::Prediction(double dt){
+	
+   AugmentSigmaPoint();
+   PredictSigmaPoint(dt);
+   PredictMeanCovariance();
+	
+	
+}
 
 void UKF::AugmentSigmaPoint(){
   // create augmented mean state
