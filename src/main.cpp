@@ -111,15 +111,17 @@ int main() {
           
           // Call ProcessMeasurement(meas_package) for Kalman filter
 		  float dt=0.0;
+		  
 		  if (prev_timestamp<0)
 			  prev_timestamp = timestamp;
 		  else
-		  dt = (meas_package.timestamp_- prev_timestamp)/1000000.0;
+			  dt = (meas_package.timestamp_- prev_timestamp)/1000000.0;
+	  
 		  std::cout << "delta t :"<<dt<<std::endl;
 		  
           ukf.ProcessMeasurement(meas_package);
 		  
-		  //ukf.Prediction(dt);
+		  ukf.Prediction(dt);
           prev_timestamp = meas_package.timestamp_;		  
 
           // Push the current estimated x,y positon from the Kalman filter's 

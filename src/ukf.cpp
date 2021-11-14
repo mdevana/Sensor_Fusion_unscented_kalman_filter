@@ -299,7 +299,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
    std::cout << "Time Stamp calculated inside :"<<dt<<std::endl;
    previous_timestamp_=meas_pack.timestamp_;
    
-   Prediction(dt);
+   //Prediction(dt);
    
 	
 	if ((meas_pack.sensor_type_ == MeasurementPackage::RADAR) && (use_radar_ == true)) {
