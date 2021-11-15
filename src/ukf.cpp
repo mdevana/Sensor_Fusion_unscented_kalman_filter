@@ -319,6 +319,8 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 }
 void UKF::UpdateLidar_linear(MeasurementPackage meas_pack){
 	
+	  std::cout << "Using linear equations :"<<dt<<std::endl;
+	
 	  MatrixXd H_laser = MatrixXd(2, 5);
 	  H_laser << 1, 0, 0, 0, 0,
                   0, 1, 0, 0, 0;
