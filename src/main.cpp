@@ -125,12 +125,6 @@ int main() {
 		  }
 	  
 		  //std::cout << "delta t :"<<dt<<std::endl;
-		  
-          
-		  
-		  
-          		  
-
           // Push the current estimated x,y positon from the Kalman filter's 
           //   state vector
 

@@ -307,7 +307,8 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 		UpdateRadar(meas_pack);
    } else if (use_laser_){
 
-		UpdateLidar(meas_pack);
+		//UpdateLidar(meas_pack);
+		UpdateLidar_linear(meas_pack);
 
    }
 
@@ -315,6 +316,29 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
    
    
    
+}
+void UKF::UpdateLidar_linear(MeasurementPackage meas_pack){
+	  H_laser_ << 1, 0, 0, 0, 0,
+                  0, 1, 0, 0, 0;
+	  MatrixXd R = MatrixXd(n_z_lidar,n_z_lidar);
+      R<< std_laspx_ * std_laspx_,0,
+          0,std_laspy_ * std_laspy_;
+	  
+	  VectorXd z=VectorXd(n_z_lidar);
+      z<<meas_pack.raw_measurements_[0],meas_pack.raw_measurements_[1];
+				  
+	  VectorXd y = z - H_laser * x_ ;
+	  
+      MatrixXd S = H_ * P_ * H_.transpose() + R ;
+	  
+      MatrixXd K = P_ * H_.transpose() * S.inverse();
+   
+      long x_size = x_.size();
+      MatrixXd I = MatrixXd::Identity(x_size, x_size);
+      
+      x_ = x_ + ( K * y) ;
+      P_ = (I - K * H_) * P_;
+				  
 }
 
 
