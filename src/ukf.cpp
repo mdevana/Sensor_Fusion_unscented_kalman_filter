@@ -331,7 +331,7 @@ void UKF::UpdateLidar_linear(MeasurementPackage meas_pack){
 				  
 	  VectorXd y = z - H_laser * x_ ;
 	  
-      MatrixXd S = H_ * P_ * H_laser.transpose() + R ;
+      MatrixXd S = H_laser * P_ * H_laser.transpose() + R ;
 	  
       MatrixXd K = P_ * H_laser.transpose() * S.inverse();
    
