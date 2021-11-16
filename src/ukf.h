@@ -131,7 +131,7 @@ class UKF {
   //Eigen::MatrixXd Tc;
   //Eigen::VectorXd z_pred;
   //Eigen::MatrixXd Zsig;
-    MatrixXd H_laser_;
+    Eigen::MatrixXd H_laser_;
   
   
   double WrapAngle(double);
