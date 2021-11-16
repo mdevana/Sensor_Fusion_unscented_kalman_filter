@@ -17,7 +17,7 @@ UKF::UKF() {
   use_laser_ = true;
 
   // if this is false, radar measurements will be ignored (except during init)
-  use_radar_ = false;
+  use_radar_ = true;
 
   // initial state vector
   x_ = VectorXd(5);
@@ -71,6 +71,8 @@ UKF::UKF() {
 
   // create augmented state covariance
   P_aug = MatrixXd(n_aug_, n_aug_);
+  
+  P_ = MatrixXd::Identity(5,5);
 
   // create sigma point matrix
   Xsig_aug = MatrixXd(n_aug_, 2 * n_aug_ + 1);
@@ -80,8 +82,24 @@ UKF::UKF() {
   weights_ = VectorXd(2 * n_aug_ + 1);
   
   weights_(0) = lambda_ / (lambda_ + n_aug_ );
-  for (int i=1 ; i< (2 * n_aug_ + 1) ; i++)
-    weights_(i) = 0.5 / (lambda_ + n_aug_);
+  weights_.tail(2*n_aug_).fill(0.5 / (n_aug_ + lambda_));
+  /*for (int i=1 ; i< (2 * n_aug_ + 1) ; i++)
+    weights_(i) = 0.5 / (lambda_ + n_aug_);*/
+
+  H_laser_ = MatrixXd(n_z_lidar, n_x_);
+  H_laser_ << 1, 0, 0, 0, 0,
+             0, 1, 0, 0, 0;
+			 
+  R_laser_ = MatrixXd(n_z_lidar,n_z_lidar);
+  R_laser_<< std_laspx_ * std_laspx_,0,
+      0,std_laspy_ * std_laspy_;
+	  
+  R_radar_ = MatrixXd(n_z_radar,n_z_radar);
+  R_radar_<< std_radr_ * std_radr_,0,0,
+      0,std_radphi_ * std_radphi_,0,
+      0,0,std_radrd_ * std_radrd_;
+	  
+  
    
    
 }
@@ -90,15 +108,7 @@ UKF::~UKF() {}
 
 void UKF::Prediction(double dt){
 	
-   while (dt> 0.1 ) {
-   	   std::cout << "into while loop" <<dt<<std::endl;
-	   AugmentSigmaPoint();
-       PredictSigmaPoint(0.05);
-       PredictMeanCovariance();
-       dt-=0.05;
-	   
-   }
-   
+  
    AugmentSigmaPoint();
    PredictSigmaPoint(dt);
    PredictMeanCovariance();
@@ -259,8 +269,8 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 	  	  
 	  x_ << px, 
 		    py, 
-            0, 
-            M_PI_2 - theta_mea,
+            v, 
+            0,
 			0;
 	  P_<< std_radr_ * std_radr_,0,0,0,0,
            0,std_radr_ * std_radr_,0,0,0,
@@ -295,11 +305,9 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
    // Stage after initialisation
    else {
 
-   //float dt = (meas_pack.timestamp_-previous_timestamp_)/1000000.0;
-   //std::cout << "Time Stamp calculated inside :"<<dt<<std::endl;
-   //previous_timestamp_=meas_pack.timestamp_;
-   
-   //Prediction(dt);
+   float dt = (meas_pack.timestamp_-previous_timestamp_)/1000000.0;
+   previous_timestamp_=meas_pack.timestamp_;
+   Prediction(dt);
    
 	
 	if ((meas_pack.sensor_type_ == MeasurementPackage::RADAR) && (use_radar_ == true)) {
@@ -307,8 +315,8 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
 		UpdateRadar(meas_pack);
    } else if ((use_laser_) && (meas_pack.sensor_type_ == MeasurementPackage::LASER)){
 
-		UpdateLidar(meas_pack);
-		//UpdateLidar_linear(meas_pack);
+		//UpdateLidar(meas_pack);
+		UpdateLidar_linear(meas_pack); // Use linear transformation algortihm for Laser
 
    }
 
@@ -318,30 +326,21 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_pack) {
    
 }
 void UKF::UpdateLidar_linear(MeasurementPackage meas_pack){
-	
-	  std::cout << "Using linear equations :"<<std::endl;
-	
-	  MatrixXd H_laser = MatrixXd(2, 5);
-	  H_laser << 1, 0, 0, 0, 0,
-                  0, 1, 0, 0, 0;
-	  MatrixXd R = MatrixXd(n_z_lidar,n_z_lidar);
-      R<< std_laspx_ * std_laspx_,0,
-          0,std_laspy_ * std_laspy_;
-	  
+  
 	  VectorXd z=VectorXd(n_z_lidar);
       z<<meas_pack.raw_measurements_[0],meas_pack.raw_measurements_[1];
 				  
-	  VectorXd y = z - H_laser * x_ ;
+	  VectorXd y = z - H_laser_ * x_ ;
 	  
-      MatrixXd S = H_laser * P_ * H_laser.transpose() + R ;
+      MatrixXd S = H_laser_ * P_ * H_laser_.transpose() + R_laser_ ;
 	  
-      MatrixXd K = P_ * H_laser.transpose() * S.inverse();
+      MatrixXd K = P_ * H_laser_.transpose() * S.inverse();
    
       long x_size = x_.size();
       MatrixXd I = MatrixXd::Identity(x_size, x_size);
       
       x_ = x_ + ( K * y) ;
-      P_ = (I - K * H_laser) * P_;
+      P_ = (I - K * H_laser_) * P_;
 				  
 }
 
@@ -374,9 +373,7 @@ void UKF::UpdateLidar(MeasurementPackage meas_pack) {
   
   // calculate innovation covariance matrix S
   
-  MatrixXd R = MatrixXd(n_z_lidar,n_z_lidar);
-  R<< std_laspx_ * std_laspx_,0,
-      0,std_laspy_ * std_laspy_;
+  
 
   
   MatrixXd S = MatrixXd(n_z_lidar,n_z_lidar);
@@ -388,7 +385,7 @@ void UKF::UpdateLidar(MeasurementPackage meas_pack) {
       S = S + diff * diff.transpose() * weights_(k);
 
   }
-  S = S + R;  
+  S = S + R_laser_;  
   
   // calculate Cross-Correlation matrix TC
   
@@ -468,12 +465,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
       
   }
   
-  // calculate innovation covariance matrix S
-  
-  MatrixXd R = MatrixXd(n_z_radar,n_z_radar);
-  R<< std_radr_ * std_radr_,0,0,
-      0,std_radphi_ * std_radphi_,0,
-      0,0,std_radrd_ * std_radrd_;
+  // calculate innovation covariance matrix S 
   
   MatrixXd S = MatrixXd(n_z_radar,n_z_radar);
   S.fill(0.0);      
@@ -487,7 +479,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_pack) {
       S = S + diff * diff.transpose() * weights_(k);
 
   }
-  S = S + R;  
+  S = S + R_radar_;  
   
   // calculate Cross-Correlation matrix TC
   
